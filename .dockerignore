@@ -1,6 +1,13 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+# noedjs
 node_modules
 npm-debug.log
+
+# docker
 Dockerfile
 .dockerignore
+
+# utils
+docker-reset.bat
+README.md

@@ -4,17 +4,17 @@ services:
 
   vobe:
     build: ./
-    image: comesa/vobe
+    image: vobe
     restart: always
-    container_name: vobe
+    container_name: vobe_node
     depends_on:
       - mongo
     ports:
-      - "80:${PORT}"
+      - "80:${web_port}"
 
   mongo:
     image: mongo
-    container_name: mongo
+    container_name: vobe_mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${mongo_user}
