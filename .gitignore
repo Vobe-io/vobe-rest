@@ -1,6 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 node_modules/
 .idea/
+data/
 
 !.gitignore
-!docker-reset.bat
+
+docker-reset.cmd
+docker-reload.cmd

@@ -4,10 +4,14 @@
 node_modules
 npm-debug.log
 
+# vobe
+vobe/secrets.json
+
 # docker
 Dockerfile
 .dockerignore
+docker-reload.cmd
+docker-reset.cmd
 
 # utils
-docker-reset.bat
 README.md

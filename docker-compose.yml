@@ -1,21 +1,22 @@
-version: '3'
+version: '3.7'
 
 services:
 
   vobe:
-    build: ./
     image: vobe
-    restart: always
     container_name: vobe_node
-    depends_on:
-      - mongo
+    build: .
+    restart: always
     ports:
-      - "80:${web_port}"
+      - 80:${web_port}
+    links:
+      - mongo
+    volumes:
+      - ./vobe/:/vobe
 
   mongo:
     image: mongo
-    container_name: vobe_mongo
+    container_name: ${mongo_container}
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${mongo_user}
-      MONGO_INITDB_ROOT_PASSWORD: ${mongo_password}
+    ports:
+      - "27017:27017"
