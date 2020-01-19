@@ -52,7 +52,7 @@ app.use(cookieParser());
 debug('Environment variables:');
 Object.keys(process.env).forEach(key => debug(' ' + key + '\t\t->\t' + process.env[key]));
 
-mongoose.connect('mongodb://vobe_mongo:27017/vobe');
+mongoose.connect('mongodb://mongo:27017/vobe');
 
 app.use(session({
     secret: process.env.session_secret || secrets.get('web_session'),

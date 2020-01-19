@@ -11,12 +11,14 @@ services:
       - 80:${web_port}
     links:
       - mongo
+    depends_on:
+      - mongo
     volumes:
       - ./vobe/:/vobe
 
   mongo:
     image: mongo
-    container_name: ${mongo_container}
+    container_name: vobe_mongo
     restart: always
     ports:
       - "27017:27017"
