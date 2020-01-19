@@ -20,6 +20,7 @@ const mongoose = require('mongoose');
 
 // libs
 const secretManager = require('./bin/lib/secretManager');
+const User = require('./bin/models/user.js');
 
 
 /*
@@ -70,6 +71,12 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', async (req, res, next) => {
+    if (req.session.loggedIn)
+        req.user = await User.findOne({_id: req.session.userId});
+    next();
+});
 
 
 // LOAD ROUTES OUT OF /routes
