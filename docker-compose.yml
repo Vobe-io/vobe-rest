@@ -8,7 +8,7 @@ services:
     build: .
     restart: always
     ports:
-      - 80:${web_port}
+      - 7070:${web_port}
     links:
       - mongo
     depends_on:
@@ -22,3 +22,13 @@ services:
     restart: always
     ports:
       - "27017:27017"
+
+  web:
+    image: nginx:mainline-alpine
+    container_name: vobe_web
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - vobe
