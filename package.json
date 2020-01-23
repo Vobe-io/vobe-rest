@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node bin/www.js"
   },
+  "nodemonConfig": {
+    "ignore": ["vobe/*"]
+  },
   "dependencies": {
     "bcrypt": "^3.0.7",
     "clean-css": "^4.1.11",
