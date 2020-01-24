@@ -46,16 +46,16 @@ services:
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
 
-    ssl_provider:
-      image: jrcs/letsencrypt-nginx-proxy-companion
-      container_name: vobe_ssl_provider
-      restart: unless-stopped
-      depends_on:
-        - proxy
-      volumes:
-        - ./vobe/certs:/etc/nginx/certs
-        - /etc/nginx/conf.d
-        - /etc/nginx/dhparam
-        - /etc/nginx/vhost.d
-        - /usr/share/nginx/html
-        - /var/run/docker.sock:/tmp/docker.sock
+  ssl_provider:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: vobe_ssl_provider
+    restart: unless-stopped
+    depends_on:
+      - proxy
+    volumes:
+      - ./vobe/certs:/etc/nginx/certs
+      - /etc/nginx/conf.d
+      - /etc/nginx/dhparam
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock
