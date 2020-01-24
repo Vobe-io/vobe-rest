@@ -1,0 +1,31 @@
+extends layout
+
+block content
+   h1= 'Welcome, ' + (user ? user.username : 'User')
+
+   input#username(placeholder='username')
+   input#password(placeholder='password', type='password')
+   input#login-confirm(type='button' value='Login' onclick='login()')
+
+   p#status= user ? 'Logged in' : ''
+   script.
+       function login() {
+           let login = {
+               username: $('#username').val(),
+               password: $('#password').val()
+           }
+
+           $.ajax({
+               url: window.location.origin + '/auth/login',
+               method: 'POST',
+               data: login,
+               dataType: 'json',
+               success: function () {
+                   location.reload()
+               },
+               error: function (err) {
+                   console.log(err);
+                   $('#status').html('Unauthorized')
+               }
+           });
+       }

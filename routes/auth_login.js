@@ -13,12 +13,19 @@ router.post('/auth/login', function (req, res, next) {
         };
 
         User.authenticate(loginData.username, loginData.password, (err, user) => {
-            if (err) return next(err);
+            if (err)
+                return res.status(401).send({
+                    success: false,
+                    message: err.message
+                });
 
             req.session.userId = user._id;
             req.session.loggedIn = true;
 
-            res.redirect('/');
+            res.status(200).send({
+                success: true,
+                message: undefined
+            });
         });
 
     }
