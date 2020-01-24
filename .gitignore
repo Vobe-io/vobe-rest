@@ -7,7 +7,6 @@ mongodata/
 !.gitignore
 
 vobe/secrets.json
-vobe/certs
 
 docker-reset.cmd
 docker-reload.cmd
