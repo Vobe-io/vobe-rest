@@ -58,4 +58,4 @@ services:
       - /etc/nginx/dhparam
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
-      - /var/run/docker.sock:/tmp/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
