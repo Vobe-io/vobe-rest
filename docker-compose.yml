@@ -32,10 +32,10 @@ services:
     restart: unless-stopped
     volumes:
       - ./vobe/certs:/etc/nginx/certs
-      - /etc/nginx/conf.d
-      - /etc/nginx/dhparam
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
+      - ./data/conf:/etc/nginx/conf.d
+      - ./data/dhparam:/etc/nginx/dhparam
+      - ./data/vhosts:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock
     ports:
       - 80:80
@@ -54,8 +54,8 @@ services:
       - proxy
     volumes:
       - ./vobe/certs:/etc/nginx/certs
-      - /etc/nginx/conf.d
-      - /etc/nginx/dhparam
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
+      - ./data/conf:/etc/nginx/conf.d
+      - ./data/dhparam:/etc/nginx/dhparam
+      - ./data/vhosts:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock
