@@ -31,28 +31,31 @@ services:
     container_name: vobe_proxy
     restart: unless-stopped
     volumes:
-    - ./data/certs:/etc/nginx/certs
-    - ./conf:/etc/nginx/conf.data
-    - ./dhparam:/etc/nginx/dhparam
-    - ./data/vhosts:/etc/nginx/vhost.data
-    - ./data/html:/usr/share/nginx/html
-    - /var/run/docker.sock:/tmp/docker.sock
+      - ./vobe/certs:/etc/nginx/certs
+      - /etc/nginx/conf.d
+      - /etc/nginx/dhparam
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock
     ports:
       - 80:80
       - 443:443
     environment:
       DEFAULT_HOST: vobe.io
       DEFAULT_EMAIL: timoaeckerle@gmx.de
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
 
-  ssl_provider:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    restart: unless-stopped
-    depends_on:
-      - proxy
-    volumes:
-      - ./data/certs:/etc/nginx/certs:rw
-      - ./conf:/etc/nginx/conf.d
-      - ./dhparam:/etc/nginx/dhparam
-      - ./data/vhosts:/etc/nginx/vhost.d
-      - ./data/html:/usr/share/nginx/html
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ssl_provider:
+      image: jrcs/letsencrypt-nginx-proxy-companion
+      container_name: vobe_ssl_provider
+      restart: unless-stopped
+      depends_on:
+        - proxy
+      volumes:
+        - ./vobe/certs:/etc/nginx/certs
+        - /etc/nginx/conf.d
+        - /etc/nginx/dhparam
+        - /etc/nginx/vhost.d
+        - /usr/share/nginx/html
+        - /var/run/docker.sock:/tmp/docker.sock
