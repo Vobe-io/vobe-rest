@@ -6,6 +6,11 @@
 ```shell script
 docker-compose up --build -d
 ```
+If you want to install and test everything locally, you should use:
+
+```shell script
+docker-compose -f docker-compose.dev.yml up --build -d
+```
 
 ## Common Errors
 ##### Can't access *any file in /vobe*

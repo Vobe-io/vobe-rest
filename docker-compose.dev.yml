@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+
+  vobe:
+    image: vobe
+    container_name: vobe_node
+    build: .
+    restart: always
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    ports:
+      - 80:${web_port}
+    volumes:
+      - ./vobe/:/vobe
+      - .:/home/node/app
+  mongo:
+    image: mongo
+    container_name: vobe_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
