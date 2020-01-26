@@ -19,7 +19,10 @@ router.post('/auth/register', function (req, res, next) {
             if (err)
                 return next(err);
             else
-                return res.redirect('/' + user.username);
+                return res.status(200).send({
+                    success: true,
+                    message: undefined
+                });
 
         });
     }

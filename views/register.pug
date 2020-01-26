@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+    input#email(placeholder='email')
+    input#username(placeholder='username')
+    input#password(placeholder='password')
+    input#register-confirm(type='button' value='Register' onclick='register()')
+
+    script.
+        function register() {
+            let register = {
+                email: $('#email').val(),
+                username: $('#username').val(),
+                password: $('#password').val()
+            }
+
+            $.ajax({
+                url: window.location.origin + '/auth/register',
+                method: 'POST',
+                data: register,
+                dataType: 'json',
+                success: function () {
+                    location.replace(window.location.origin + '/login');
+                },
+                error: function () {
+                    console.log(err);
+                }
+            })
+        }
