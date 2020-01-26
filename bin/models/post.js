@@ -11,18 +11,20 @@ let PostSchema = new mongoose.Schema({
         required: false,
     },
 
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+
 
     text: {
         type: String,
         required: true
     }
-});
 
-//authenticate input against database
-/*PostSchema.statics.getParent = () => {
-    console.log(this);
-    this.find({_id: this.parent});
-};*/
+
+});
 
 
 let Post = mongoose.model('post', PostSchema);

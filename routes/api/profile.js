@@ -3,7 +3,6 @@ let User = require(__bin + "/models/user.js");
 let router = express.Router();
 
 router.post('/api/profile', function (req, res, next) {
-    console.log('username: ', req.body.username);
     User
         .findOne({username: req.body.username})
         .exec(function (err, user) {
@@ -19,4 +18,4 @@ router.post('/api/profile', function (req, res, next) {
         });
 });
 
-module.exports = router;
+module.exports = {index: 1, router: router};

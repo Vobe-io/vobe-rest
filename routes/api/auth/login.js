@@ -4,7 +4,6 @@ let router = express.Router();
 
 /* GET home page. */
 router.post('/api/auth/login', function (req, res, next) {
-    console.log(req.body);
     if (req.body.username && req.body.password) {
 
         let loginData = {
@@ -31,4 +30,4 @@ router.post('/api/auth/login', function (req, res, next) {
     }
 });
 
-module.exports = router;
+module.exports = {index: 0, router: router};

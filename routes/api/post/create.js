@@ -29,4 +29,4 @@ router.post('/api/post/create', function (req, res, next) {
 
 });
 
-module.exports = router;
+module.exports = {index: 0, router: router};

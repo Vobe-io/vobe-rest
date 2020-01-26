@@ -14,6 +14,7 @@ router.post('/api/auth/register', function (req, res, next) {
             username: req.body.username,
             password: req.body.password,
         };
+
         //use schema.create to insert data into the db
         User.create(userData, function (err, user) {
             if (err)
@@ -28,4 +29,4 @@ router.post('/api/auth/register', function (req, res, next) {
     }
 });
 
-module.exports = router;
+module.exports = {index: 0, router: router};

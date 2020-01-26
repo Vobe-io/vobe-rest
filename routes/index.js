@@ -6,4 +6,4 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: process.env.web_name || 'index', user: req.user});
 });
 
-module.exports = router;
+module.exports = {index: 0, router: router};

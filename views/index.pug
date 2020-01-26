@@ -18,12 +18,9 @@ block content
            data: {},
            dataType: 'json',
            success: function (res) {
-               console.log(res)
-               let feed = '';
                res.posts.forEach(function (p) {
-                   feed += p.text + '<br>'
+                   $('#posts').append(`<p></p><a href="/${p.ownerData.name}"> ${p.ownerData.name}</a> <span>${p.text}</span></p>`)
                });
-               $('#posts').html(feed)
            },
            error: function (err) {
                console.log(err);

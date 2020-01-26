@@ -6,4 +6,4 @@ router.get('/:username', function (req, res, next) {
     res.render('profile', {username: req.params.username});
 });
 
-module.exports = router;
+module.exports = {index: 1, router: router};
