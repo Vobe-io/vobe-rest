@@ -16,7 +16,7 @@ block content
            }
 
            $.ajax({
-               url: window.location.origin + '/auth/login',
+               url: window.location.origin + '/api/auth/login',
                method: 'POST',
                data: login,
                dataType: 'json',
@@ -28,4 +28,4 @@ block content
                    $('#status').html('Unauthorized')
                }
            });
-       }
+       };

@@ -1,9 +1,9 @@
 let express = require('express');
-let User = require("./../bin/models/user.js");
+let User = require(__bin + "/models/user.js");
 let router = express.Router();
 
 /* GET home page. */
-router.post('/auth/login', function (req, res, next) {
+router.post('/api/auth/login', function (req, res, next) {
     console.log(req.body);
     if (req.body.username && req.body.password) {
 

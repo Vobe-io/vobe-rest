@@ -1,3 +1,4 @@
+global.__root = __dirname;
 let fs = require("fs");
 let debug = require('debug')('vobe:server');
 
@@ -21,20 +22,21 @@ const mongoose = require('mongoose');
 // libs
 const secretManager = require('./bin/lib/secretManager');
 const User = require('./bin/models/user.js');
+const clc = require('cli-color');
+const Table = require('cli-table');
 
 
-/*
-
+console.log(`
  /$$    /$$          /$$                     /$$
 | $$   | $$         | $$                    |__/
 | $$   | $$ /$$$$$$ | $$$$$$$   /$$$$$$      /$$  /$$$$$$
 |  $$ / $$//$$__  $$| $$__  $$ /$$__  $$    | $$ /$$__  $$
- \  $$ $$/| $$  \ $$| $$  \ $$| $$$$$$$$    | $$| $$  \ $$
-  \  $$$/ | $$  | $$| $$  | $$| $$_____/    | $$| $$  | $$
-   \  $/  |  $$$$$$/| $$$$$$$/|  $$$$$$$ /$$| $$|  $$$$$$/
-    \_/    \______/ |_______/  \_______/|__/|__/ \______/
+ \\  $$ $$/| $$  \\ $$| $$  \\ $$| $$$$$$$$    | $$| $$  \\ $$
+  \\  $$$/ | $$  | $$| $$  | $$| $$_____/    | $$| $$  | $$
+   \\  $/  |  $$$$$$/| $$$$$$$/|  $$$$$$$ /$$| $$|  $$$$$$/
+    \\_/    \\______/ |_______/  \\_______/|__/|__/ \\______/
+`);
 
-                                                          */
 
 const secrets = secretManager({
     createFile: true,
@@ -50,12 +52,15 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-debug('Environment variables:');
-Object.keys(process.env).forEach(key => debug(' ' + key + '\t\t->\t' + process.env[key]));
-
-mongoose.connect('mongodb://mongo:27017/vobe');
+mongoose.set('useCreateIndex', true);
+mongoose.connect('mongodb://mongo:27017/vobe', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 app.use(session({
+    resave: true,
+    saveUninitialized: true,
     secret: process.env.session_secret || secrets.get('web_session'),
     store: new MongoStore({
         mongooseConnection: mongoose.connection,
@@ -72,7 +77,7 @@ app.use(sassMiddleware({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('*', async (req, res, next) => {
+app.all('*', async (req, res, next) => {
     if (req.session.loggedIn)
         req.user = await User.findOne({_id: req.session.userId});
     next();
@@ -80,16 +85,33 @@ app.get('*', async (req, res, next) => {
 
 
 // LOAD ROUTES OUT OF /routes
-fs.readdirSync(path.join(__dirname, 'routes'), {withFileTypes: true, encoding: "utf-8"}).forEach(f => {
-    if (f.name !== undefined && f.name.endsWith(".js")) {
-        try {
-            app.use(require(path.join(__dirname, 'routes', f.name)));
-            console.log('Loaded Route : ' + f.name);
-        } catch (e) {
-            debug(`Couldn't load route: ` + f.name)
-        }
+(function () {
+    let table = new Table({chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}});
+    let errors = [];
+
+    function loadRoutes(p) {
+        console.log('LOADING ' + p);
+        fs.readdirSync(p, {withFileTypes: true, encoding: "utf-8"}).forEach(f => {
+            if (f.isDirectory()) {
+                loadRoutes(path.join(p, f.name));
+            }
+            if (f.name !== undefined && f.name.endsWith(".js")) {
+                try {
+                    app.use(require(path.join(p, f.name)));
+                    table.push([p + '/' + f.name, clc.green('PASSED')])
+                } catch (e) {
+                    errors.push(e);
+                    table.push([p + '/' + f.name, clc.red('ERROR')]);
+                }
+            }
+        });
     }
-});
+
+    loadRoutes(path.join(__dirname, 'routes'));
+    if (errors.length > 0) console.log(clc.bold.red('\n\nENCOUNTERED ERROR(S) WHILE LOADING ROUTES:\n'));
+    errors.forEach(e => console.log(clc.red(e)));
+    console.log(table.toString());
+})();
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

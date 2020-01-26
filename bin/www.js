@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-
+global.__bin = __dirname;
 let app = require('../app');
 let debug = require('debug')('vobe:server');
 let http = require('http');
@@ -23,7 +23,7 @@ let server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
+global.__root = __dirname;
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

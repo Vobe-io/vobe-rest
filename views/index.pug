@@ -1,5 +1,54 @@
 extends layout
 
 block content
-   h1= title
+   h1= user ? ('Welcome, ' + user.username + '.') : title
    p Welcome to #{title}
+
+   textarea#post-text
+   input(type='button' onclick='createPost()' value='send')
+   p#status
+
+   div#posts
+
+   script.
+
+       $.ajax({
+           url: window.location.origin + '/api/post/get',
+           method: 'POST',
+           data: {},
+           dataType: 'json',
+           success: function (res) {
+               console.log(res)
+               let feed = '';
+               res.posts.forEach(function (p) {
+                   feed += p.text + '<br>'
+               });
+               $('#posts').html(feed)
+           },
+           error: function (err) {
+               console.log(err);
+               $('#status').html(err.responseText)
+           }
+       });
+
+       function createPost() {
+           let data = {
+               post: JSON.stringify({
+                   text: $('#post-text').val()
+               })
+           };
+           console.log(data);
+           $.ajax({
+               url: window.location.origin + '/api/post/create',
+               method: 'POST',
+               data: data,
+               dataType: 'json',
+               success: function (res) {
+                   $('#status').html(res.message)
+               },
+               error: function (err) {
+                   console.log(err);
+                   $('#status').html('Unauthorized')
+               }
+           });
+       }

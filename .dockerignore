@@ -9,7 +9,6 @@ vobe/secrets.json
 
 # docker
 Dockerfile
-.dockerignore
 docker-reload.cmd
 docker-reset.cmd
 
