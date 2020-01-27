@@ -15,6 +15,7 @@ router.post('/api/post/create', function (req, res, next) {
     Post.create({
 
         owner: req.user._id,
+        parent: post.parent,
         text: post.text
 
     }, function (err, p) {

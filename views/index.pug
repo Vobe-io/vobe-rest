@@ -12,40 +12,63 @@ block content
 
    script.
 
-       $.ajax({
-           url: window.location.origin + '/api/post/get',
-           method: 'POST',
-           data: {},
-           dataType: 'json',
+       send('/api/post/get', {
            success: function (res) {
                res.posts.forEach(function (p) {
-                   $('#posts').append(`<p></p><a href="/${p.ownerData.name}"> ${p.ownerData.name}</a> <span>${p.text}</span></p>`)
+
+                   console.log(p);
+
+                   let children = "";
+                   p.children.forEach(function (c) {
+                       children += `
+                        <p id="post-${c._id}">
+                            <a href="/${c.ownerData.name}"> ${c.ownerData.name}</a>
+                            <span>${c.text}</span>
+                        </p>`
+                   });
+
+                   $('#posts').append(`
+                    <p id="post-${p._id}">
+                        <a href="/${p.ownerData.name}"> ${p.ownerData.name}</a>
+                        <span>${p.text}</span>
+                        <input type="button" value="Reply" onclick="createPost('${p._id}')">
+                        <div style="margin-left: 25px">
+                            ${children}
+                        </div>
+                    </p>
+                   `)
                });
-           },
-           error: function (err) {
+           }, error: function (err) {
                console.log(err);
                $('#status').html(err.responseText)
            }
        });
 
-       function createPost() {
+       function createPost(parent) {
+           let post = JSON.stringify({
+               parent: parent,
+               text: $('#post-text').val()
+           });
+           console.log(post);
            let data = {
-               post: JSON.stringify({
-                   text: $('#post-text').val()
-               })
+               post: post
            };
-           console.log(data);
-           $.ajax({
-               url: window.location.origin + '/api/post/create',
-               method: 'POST',
-               data: data,
-               dataType: 'json',
-               success: function (res) {
+           send('/api/post/create', {
+               data: data, success: function (res) {
                    $('#status').html(res.message)
-               },
-               error: function (err) {
+               }, error: function (err) {
                    console.log(err);
                    $('#status').html('Unauthorized')
                }
            });
+       }
+
+       function send(url, ajax) {
+           $.ajax(Object.assign({
+               url: window.location.origin + url,
+               method: 'POST',
+               dataType: 'json',
+               data: {},
+               error: alert
+           }, ajax));
        }

@@ -16,16 +16,11 @@ let PostSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-
-
     text: {
         type: String,
         required: true
     }
-
-
 });
-
 
 let Post = mongoose.model('post', PostSchema);
 module.exports = Post;

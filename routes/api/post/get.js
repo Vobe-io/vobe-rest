@@ -8,7 +8,8 @@ router.post('/api/post/get', function (req, res, next) {
         .find({})
         .sort({date: -1})
         .limit(20)
-        .exec(async function (err, posts_) {
+        .lean()
+        .exec(async function (err, postData) {
             if (err)
                 return res.status(500).send({
                     success: false,
@@ -17,13 +18,32 @@ router.post('/api/post/get', function (req, res, next) {
 
             let posts = [];
 
-            for (p in posts_) {
-                let owner = await User.findById(posts_[p].owner).exec();
-                posts.push(Object.assign({
-                    ownerData: {
-                        name: owner.username
-                    }
-                }, posts_[p].toObject()));
+            for (let post of postData) {
+
+                if (post.parent)
+                    continue;
+
+                const getOwner = (async _ => {
+                    return await User
+                        .findById(_.owner)
+                        .lean();
+                });
+
+                let children = await Post
+                    .find({parent: post._id})
+                    .limit(20)
+                    .sort({date: -1})
+                    .lean();
+
+
+                for (const c in children)
+                    children[c].ownerData = {name: (await getOwner(post)).username};
+
+
+                post.children = children;
+                post.ownerData = {name: (await getOwner(post)).username};
+
+                posts.push(post);
             }
 
             res.send({
