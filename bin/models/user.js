@@ -43,8 +43,11 @@ UserSchema.statics.authenticate = function (username, password, callback) {
         await bcrypt.compare(password, user.password, function (err, result) {
             if (result === true)
                 return callback(null, user);
-            else
-                return callback();
+            else {
+                let err = new Error('Password wrong.');
+                err.status = 401;
+                return callback(err);
+            }
         })
     });
 };

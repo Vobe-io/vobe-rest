@@ -2,10 +2,12 @@ extends layout
 
 block content
 
-    input#email(placeholder='email')
+    input#email(placeholder='email', type='email')
     input#username(placeholder='username')
-    input#password(placeholder='password')
+    input#password(placeholder='password', type='password')
     input#register-confirm(type='button' value='Register' onclick='register()')
+
+    p#status
 
     script.
         function register() {
@@ -23,8 +25,9 @@ block content
                 success: function () {
                     location.replace(window.location.origin + '/login');
                 },
-                error: function () {
+                error: function (err) {
                     console.log(err);
+                    $('#status').html(err.responseJSON.message);
                 }
             })
         }
