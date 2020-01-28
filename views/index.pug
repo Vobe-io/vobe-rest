@@ -14,30 +14,25 @@ block content
 
        send('/api/post/get', {
            success: function (res) {
-               res.posts.forEach(function (p) {
 
-                   console.log(p);
+               function getPostHtml(posts) {
+                   let out = "";
 
-                   let children = "";
-                   p.children.forEach(function (c) {
-                       children += `
-                        <p id="post-${c._id}">
-                            <a href="/${c.ownerData.name}"> ${c.ownerData.name}</a>
-                            <span>${c.text}</span>
+                   for (const postIndex in posts) {
+                       let post = posts[postIndex];
+                       console.log(post.children ? post.children.length : 0);
+                       out += `
+                        <p id="post-${post._id}">
+                            <a href="/${post.ownerData.name}"> ${post.ownerData.name}</a>
+                            <span>${post.text}</span>
+                            <input type="button" value="Reply" onclick="createPost('${post._id}')">
+                            ${post.children ? `<div style="margin-left: 25px"> ${getPostHtml(post.children)}</div>` : ''}
                         </p>`
-                   });
+                   }
+                   return out;
+               }
 
-                   $('#posts').append(`
-                    <p id="post-${p._id}">
-                        <a href="/${p.ownerData.name}"> ${p.ownerData.name}</a>
-                        <span>${p.text}</span>
-                        <input type="button" value="Reply" onclick="createPost('${p._id}')">
-                        <div style="margin-left: 25px">
-                            ${children}
-                        </div>
-                    </p>
-                   `)
-               });
+               $('#posts').append(getPostHtml(res.posts));
            }, error: function (err) {
                console.log(err);
                $('#status').html(err.responseText)

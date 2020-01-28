@@ -1,7 +1,7 @@
 let express = require('express');
 let Post = require(__bin + "/models/post.js");
 let router = express.Router();
-var xss = require("xss");
+let xss = require("xss");
 
 router.post('/api/post/create', function (req, res, next) {
     if (req.loggedIn)

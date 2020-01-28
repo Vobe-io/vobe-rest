@@ -2,13 +2,13 @@ let mongoose = require('mongoose');
 let bcrypt = require('bcrypt');
 
 let UserSchema = new mongoose.Schema({
-    email: {
+    username: {
         type: String,
         unique: true,
         required: true,
         trim: true
     },
-    username: {
+    email: {
         type: String,
         unique: true,
         required: true,
@@ -17,6 +17,15 @@ let UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+    },
+
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    emailVerified: {
+        type: Boolean,
+        default: false
     }
 });
 

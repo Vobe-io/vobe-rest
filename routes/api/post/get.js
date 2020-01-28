@@ -29,18 +29,23 @@ router.post('/api/post/get', function (req, res, next) {
                         .lean();
                 });
 
-                let children = await Post
-                    .find({parent: post._id})
-                    .limit(20)
-                    .sort({date: -1})
-                    .lean();
+                const loadChildren = async (post, walk) => {
+                    let children = await Post
+                        .find({parent: post._id})
+                        .limit(20) // REMOVE LATER WITH LAZY LOAD
+                        .sort({date: -1})
+                        .lean();
 
+                    for (const c of children) {
+                        c.ownerData = {name: (await getOwner(c)).username};
+                        if (walk > 0)
+                            c.children = await loadChildren(c, walk - 1);
+                    }
 
-                for (const c in children)
-                    children[c].ownerData = {name: (await getOwner(post)).username};
+                    return children;
+                };
 
-
-                post.children = children;
+                post.children = await loadChildren(post, 10);
                 post.ownerData = {name: (await getOwner(post)).username};
 
                 posts.push(post);
