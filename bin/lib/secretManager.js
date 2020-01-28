@@ -20,8 +20,7 @@ const secretManager = (options = {
 
 
     let data = JSON.parse(fs.readFileSync(file, 'utf-8').toString());
-    if (data !== undefined)
-        sm.secrets = Object.assign(sm.secrets, data || {});
+    sm.secrets = Object.assign(sm.secrets, data || {});
 
     sm.get = (key = 'default') => {
         if (sm.secrets[key] === undefined && options.generateNew)

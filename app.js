@@ -121,7 +121,7 @@ app.all('*', async (req, res, next) => {
 
     routes
         .sort((a, b) => (a.data.index ? a.data.index : 0) - (b.data.index ? b.data.index : 0))
-        .map(r => {
+        .forEach(r => {
             if (r.passed) {
                 app.use(r.data.router ? r.data.router : r);
                 table.push([r.data.index, path.join(r.path, r.name), clc.green('PASSED')]);
