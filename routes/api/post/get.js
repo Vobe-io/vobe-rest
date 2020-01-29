@@ -3,11 +3,12 @@ let Post = require(__bin + "/models/post.js");
 let User = require(__bin + "/models/user.js");
 let router = express.Router();
 
-router.post('/api/post/get', function (req, res, next) {
+router.post('/api/post/get/:postID', function (req, res, next) {
+    let id = req.params.postID !== '0';
     Post
-        .find({})
+        .find(id ? { _id: req.params.postID } : {})
         .sort({date: -1})
-        .limit(20)
+        .limit(id ? 1 : 20)
         .lean()
         .exec(async function (err, postData) {
             if (err)
@@ -20,8 +21,8 @@ router.post('/api/post/get', function (req, res, next) {
 
             for (let post of postData) {
 
-                if (post.parent)
-                    continue;
+
+                if (post.parent && !id) continue;
 
                 const getOwner = (async _ => {
                     return await User

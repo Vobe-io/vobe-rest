@@ -1,0 +1,65 @@
+extends layout
+
+block content
+
+    textarea#post-text
+    input(type='button' onclick='createPost()' value='send')
+
+    div#posts
+    script.
+
+        send('/api/post/get/#{postID}', {
+            success: function (res) {
+
+                function getPostHtml(posts) {
+                    let out = "";
+
+                    for (const postIndex in posts) {
+                        let post = posts[postIndex];
+                        console.log(post.children ? post.children.length : 0);
+                        out += `
+                         <p id="post-${post._id}">
+                             <a href="/${post.ownerData.name}"> ${post.ownerData.name}</a>
+                             <span>${post.text}</span>
+                             <input type="button" value="Reply" onclick="createPost('${post._id}')">
+                             ${post.children ? `<div style="margin-left: 25px"> ${getPostHtml(post.children)}</div>` : ''}
+                         </p>`
+                    }
+                    return out;
+                }
+                console.log(res.posts);
+                $('#posts').append(getPostHtml(res.posts));
+            }, error: function (err) {
+                console.log(err);
+                $('#status').html(err.responseText)
+            }
+        });
+
+        function createPost(parent) {
+            let post = JSON.stringify({
+                parent: parent,
+                text: $('#post-text').val()
+            });
+            console.log(post);
+            let data = {
+                post: post
+            };
+            send('/api/post/create', {
+                data: data, success: function (res) {
+                    $('#status').html(res.message)
+                }, error: function (err) {
+                    console.log(err);
+                    $('#status').html('Unauthorized')
+                }
+            });
+        }
+
+        function send(url, ajax) {
+            $.ajax(Object.assign({
+                url: window.location.origin + url,
+                method: 'POST',
+                dataType: 'json',
+                data: {},
+                error: alert
+            }, ajax));
+        }
