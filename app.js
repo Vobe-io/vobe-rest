@@ -1,4 +1,5 @@
 global.__root = __dirname;
+require('dotenv').config();
 let fs = require("fs");
 let debug = require('debug')('vobe:server');
 
@@ -36,7 +37,6 @@ console.log(`
    \\  $/  |  $$$$$$/| $$$$$$$/|  $$$$$$$ /$$| $$|  $$$$$$/
     \\_/    \\______/ |_______/  \\_______/|__/|__/ \\______/
 `);
-
 
 const secrets = secretManager({
     createFile: true,
@@ -82,7 +82,6 @@ app.all('*', async (req, res, next) => {
         req.user = await User.findOne({_id: req.session.userId});
     next();
 });
-
 
 // LOAD ROUTES OUT OF /routes
 (function () {

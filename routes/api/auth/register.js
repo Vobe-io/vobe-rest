@@ -1,10 +1,13 @@
 let express = require('express');
+let crypto = require('crypto-random-string');
 let User = require(__bin + "/models/user.js");
+let Verification = require(__bin + "/models/verification.js");
 let router = express.Router();
+let sg = require('@sendgrid/mail');
+sg.setApiKey(process.env.SENDGRID_API_KEY);
 
 /* GET home page. */
 router.post('/api/auth/register', function (req, res, next) {
-    console.log(req.body);
     if (req.body.email &&
         req.body.username &&
         req.body.password) {
@@ -35,11 +38,34 @@ router.post('/api/auth/register', function (req, res, next) {
                     success: false,
                     message: err.message
                 });
-            else
-                return res.status(200).send({
-                    success: true,
-                    message: undefined
-                });
+
+            Verification.create(
+                {
+                    email: userData.email,
+                    token: crypto({length: 255})
+                },
+                function (err, verification) {
+                    const msg = {
+                        to: userData.email,
+                        from: 'verification@vobe.io',
+                        subject: 'Verify Your Email',
+                        text: `Click on this link to verify your email https://vobe.io/verification?token=${verification.token}&email=${user.email}`,
+                        html: `Click on this link to verify your email <a href="https://vobe.io/verification?token=${verification.token}&email=${user.email}">Click here</a>`
+                    };
+                    sg.send(msg);
+                    if (err) {
+                        return res.status(401).send({
+                            success: false,
+                            message: err.message
+                        });
+                    }
+                }
+            );
+
+            return res.status(200).send({
+                success: true,
+                message: undefined
+            });
 
         });
     }

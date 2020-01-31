@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h1#message !{message}
+    input(type='button' value='Home' onclick='goHome();')
+
+    script.
+        function goHome() {
+            location.replace(window.location.origin + '/');
+        }
