@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap");
+* {
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
+  outline: none;
+}
+
+body {
+  background-color: #FFFFFF;
+}
+
+.debug {
+  border: 2px solid red;
+}
+
+.post {
+  overflow: hidden;
+  width: 30em;
+  margin: 1em 1em 0;
+  border-radius: 0.5em;
+}
+.post .float-left {
+  float: left;
+}
+.post .float-right {
+  float: right;
+}
+.post .post-container {
+  display: flex;
+  padding: 1.2em;
+}
+.post .post-container:hover {
+  background-color: #d2d2d2;
+  cursor: pointer;
+}
+.post .post-head {
+  display: flex;
+}
+.post .post-head h3 {
+  color: #7B1FA2;
+  margin: 0 0 0.25em;
+}
+.post .post-head > img {
+  margin-left: 0.25em;
+}
+.post .post-content {
+  padding: 0.75em 0.75em 0;
+  width: 27em;
+}
+.post .post-content .post-actions {
+  margin-top: 1em;
+}
+.post .post-content .post-actions span {
+  margin-right: 0.25em;
+}
+.post .post-content .post-actions img {
+  height: 1em;
+}
+.post .post-content .post-actions > div {
+  display: flex;
+  align-items: center;
+}
+.post .post-content .post-actions button {
+  background-color: transparent;
+  border: none;
+}
+.post .post-content .post-actions button:hover {
+  cursor: pointer;
+}
+.post .post-user {
+  width: 4em;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.post .post-user > img {
+  width: 2.75em;
+  height: 2.75em;
+}
+.post .post-comment {
+  margin-top: 2em;
+}
+.post .post-comment .post-comment-container {
+  display: flex;
+  justify-content: center;
+}
+.post .post-comment .post-comment-container textarea {
+  background-color: transparent;
+  border: 0.2em solid #000;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  width: 100%;
+  resize: none;
+}
+.post .post-comment .post-comment-actions button {
+  margin-top: 0.5em;
+  background-color: transparent;
+  border: 0.2em solid #000;
+  border-radius: 0.5em;
+}
+
+/*# sourceMappingURL=post.css.map */

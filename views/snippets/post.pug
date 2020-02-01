@@ -1,0 +1,58 @@
+each post in posts
+   .post(id='post-' + post._id data-post-id=post._id)
+      .post-container
+         .post-user
+            img(src='/img/icons/face.svg')
+         .post-content
+            .post-head
+               h3= post.ownerData.username
+
+               if(post.ownerData.verified)
+                  img(src='/img/icons/verified.svg' style='height: 1em; transform: translateY(0.15em)' title='Verified User')
+
+               span(style='color: #999; margin-left: 0.5em')='@' + post.ownerData.username
+
+            span= post.text
+
+            .post-actions
+               span.post-actions-replies= (post.children.length || 0)
+               img(src='/img/icons/comments.svg' style='transform: translateY(0.15em)' title='Reply to this Post')
+               button.float-right
+                  img(src='/img/icons/arrow.svg' title='Up-vote this Post' style='transform: rotate(90deg)')
+               button.float-right
+                  img(src='/img/icons/arrow.svg' title='Down-vote this Post' style='transform: rotate(-90deg)')
+            .post-comment(style='display: none')
+               .post-comment-container
+                  textarea(id='comment-area-' + post._id)
+               .post-comment-actions
+                  button(onclick=`createPost($('#comment-area-${post._id}').val(), '${post._id}')`).float-right Answer
+
+   //-.post-comments
+      each child in post.children
+         .comment // TODO
+            p=child.text
+
+script.
+
+    $('#posts').ready(function (e) {
+        console.log($('#posts'))
+    })
+
+    function createPost(text, parent) {
+        let post = JSON.stringify({
+            parent: parent,
+            text: text
+        });
+        let data = {
+            post: post
+        };
+        sendPOST('/api/post/create', {
+            data: data,
+            success: function (res) {
+                $('#status').html(res.message)
+            }, error: function (err) {
+                console.log(err);
+                $('#status').html('Unauthorized')
+            }
+        });
+    }

@@ -1,4 +1,3 @@
-global.__root = __dirname;
 let fs = require("fs");
 let debug = require('debug')('vobe:server');
 
@@ -24,6 +23,10 @@ const secretManager = require('./bin/lib/secretManager');
 const User = require('./bin/models/user.js');
 const clc = require('cli-color');
 const Table = require('cli-table');
+
+//global vars
+global.__root = __dirname;
+global.__models = path.join(__root, 'bin', 'models');
 
 
 console.log(`

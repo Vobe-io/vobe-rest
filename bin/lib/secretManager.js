@@ -25,7 +25,6 @@ const secretManager = (options = {
     sm.get = (key = 'default') => {
         if (sm.secrets[key] === undefined && options.generateNew)
             sm.secrets[key] = sm.generateKey();
-
         sm.save();
         return sm.secrets[key];
     };

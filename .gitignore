@@ -9,5 +9,4 @@ mongodata/
 vobe/secrets.json
 vobe/certs
 
-docker-reset.cmd
-docker-reload.cmd
+*.cmd
