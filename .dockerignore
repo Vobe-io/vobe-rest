@@ -8,9 +8,10 @@ npm-debug.log
 vobe/secrets.json
 
 # docker
-Dockerfile
-docker-reload.cmd
-docker-reset.cmd
-
-# utils
+Dockerfile*
+/*.cmd
+.dockerignore
+.gitignore
+.git
 README.md
+LICENSE

@@ -2,7 +2,6 @@ let express = require('express');
 let Post = require(__bin + "/models/post.js");
 let User = require(__bin + "/models/user.js");
 let router = express.Router();
-let xss = require("xss");
 
 router.post('/api/post/create', function (req, res, next) {
     if (!req.session.loggedIn)
@@ -17,9 +16,9 @@ router.post('/api/post/create', function (req, res, next) {
 
             Post.create({
 
-                owner: req.user._id,
-                parent: post.parent,
-                text: xss(post.text)
+        owner: req.user._id,
+        parent: post.parent,
+        text: post.text
 
             }, function (err, p) {
                 if (err)
