@@ -37,7 +37,7 @@ router.post('/api/auth/register', function (req, res, next) {
             if (err)
                 return res.status(401).send({
                     success: false,
-                    message: err.message
+                    message: 'Email, or username already exists'
                 });
             if (!user.emailVerified) {
                 Verification.create(
@@ -66,7 +66,7 @@ router.post('/api/auth/register', function (req, res, next) {
 
             return res.status(200).send({
                 success: true,
-                message: 'Just one more step: We have sand an email to ' + userData.email + ' please check your spam folder'
+                message: 'Just one more step: We have send an email to <b>' + userData.email + '</b> please check your spam folder'
             });
 
         });

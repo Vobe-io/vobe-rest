@@ -23,10 +23,9 @@ block content
                 data: register,
                 dataType: 'json',
                 success: function (data) {
-                    $('#status').html(data.responseJSON.message);
+                    $('#status').html(data.message);
                 },
                 error: function (err) {
-                    console.log(err);
                     $('#status').html(err.responseJSON.message);
                 }
             })
