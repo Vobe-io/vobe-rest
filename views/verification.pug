@@ -2,9 +2,14 @@ extends layout
 
 block content
     h1#message !{message}
-    input(type='button' value='Home' onclick='goHome();')
+    input(type='button' value='Login' onclick='login();')
+    input(type='button' value='Home' onclick='home();')
 
     script.
-        function goHome() {
+        function login() {
+            location.replace(window.location.origin + '/login');
+        }
+
+        function home() {
             location.replace(window.location.origin + '/');
         }

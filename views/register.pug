@@ -22,8 +22,8 @@ block content
                 method: 'POST',
                 data: register,
                 dataType: 'json',
-                success: function () {
-                    location.replace(window.location.origin + '/login');
+                success: function (data) {
+                    $('#status').html(data.responseJSON.message);
                 },
                 error: function (err) {
                     console.log(err);

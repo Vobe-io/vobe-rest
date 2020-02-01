@@ -65,6 +65,10 @@ UserSchema.statics.authenticate = function (username, password, callback) {
     });
 };
 
+//check if user email is verified
+UserSchema.statics.isEmailVerified = function (userID, callback) {
+    User.findOne({_id: userID}).exec((err, user) => callback(user.emailVerified));
+};
 
 let User = mongoose.model('user', UserSchema);
 module.exports = User;

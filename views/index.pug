@@ -52,7 +52,6 @@ block content
                data: data, success: function (res) {
                    $('#status').html(res.message)
                }, error: function (err) {
-                   console.log(err);
                    $('#status').html('Unauthorized')
                }
            });
