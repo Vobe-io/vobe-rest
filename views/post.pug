@@ -5,13 +5,9 @@ block content
     link(rel='stylesheet' href='/style/sites/index.css')
 
     p#status
-    div#feed
-        div
-            div#post-writer-container
-                div#post-writer
-                    textarea#post-text(placeholder='Tell us something about yourself!')
-                    #post-writer-actions
-                        button(type='button' onclick='createPost($("#post-text").val())').float-right
-                            img(src='/img/icons/send.svg')
-            div#posts
-                include snippets/post
+    include snippets/post
+
+
+
+        //-
+            NEEDS A BIG REWRITE

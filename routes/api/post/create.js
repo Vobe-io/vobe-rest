@@ -1,4 +1,5 @@
 let express = require('express');
+let pug = require('pug');
 let Post = require(__bin + "/models/post.js");
 let User = require(__bin + "/models/user.js");
 let router = express.Router();
@@ -16,21 +17,47 @@ router.post('/api/post/create', function (req, res, next) {
 
             Post.create({
 
-        owner: req.user._id,
-        parent: post.parent,
-        text: post.text
+                owner: req.user._id,
+                parent: post.parent,
+                text: post.text
 
-            }, function (err, p) {
+            }, async function (err, p) {
                 if (err)
                     return next(err);
 
-                res.send({
-                    success: true,
-                    post: p
+                res.render('snippets/post', {
+                    user: req.user,
+                    posts: await Post.aggregate([{
+                        $match: {
+                            _id: p._id
+                        }
+                    }, {
+                        $lookup: {
+                            from: "users",
+                            localField: "owner",
+                            foreignField: "_id",
+                            as: "owner"
+                        }
+                    }, {
+                        $unwind: {
+                            path: '$owner'
+                        }
+                    }, {
+                        $lookup: {
+                            from: 'posts',
+                            localField: '_id',
+                            foreignField: 'parent',
+                            as: 'children'
+                        }
+                    }])
+                        .sort({date: -1})
+                        .limit(20),
+                    modules: {
+                        moment: require('moment')
+                    }
                 });
             });
-        }
-        else {
+        } else {
             return res.send({
                 success: false,
                 message: 'Your account must be verified'

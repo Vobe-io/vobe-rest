@@ -18,7 +18,7 @@ each post in posts
                span= post.text
 
             .post-actions
-               span= (post.children.length || 0)
+               span= post.children ? post.children.length : 0
                button(onclick=`openComment("${post._id}")`)
                   img(src='/img/icons/comments.svg' style='transform: translateY(0.15em)' title='Reply to this Post')
                span(style='color: #757575')= ' • ' + modules.moment(new Date(post.date)).fromNow()
@@ -43,26 +43,3 @@ script.
     $('.post-content').click(function (e) {
         window.location.href = '/v/' + $(e.currentTarget).data('post-id')
     })
-
-    function createPost(text, parent) {
-        let post = JSON.stringify({
-            parent: parent,
-            text: text
-        });
-        let data = {
-            post: post
-        };
-        sendPOST('/api/post/create', {
-            data: data,
-            success: function (res) {
-                $('#status').html(res.message)
-
-                //FIX LATER lmao
-                if (parent === undefined)
-                    window.location.reload()
-            }, error: function (err) {
-                console.log(err);
-                $('#status').html('Unauthorized')
-            }
-        });
-    }

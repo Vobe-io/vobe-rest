@@ -17,8 +17,45 @@ block content
             include snippets/post
 
    script.
+       $(document).ready(function () {
+           anime({
+               targets: '.post',
+               translateX: ['-7em', '0'],
+               opacity: [0, 1],
+               delay: anime.stagger(100),
+               easing: 'easeOutExpo'
+           })
+       })
+
        $('#post-text').keydown(function (e) {
            if (e.ctrlKey && e.keyCode === 13) {
                createPost($("#post-text").val())
            }
        });
+
+       function createPost(text, parent) {
+           let post = JSON.stringify({
+               parent: parent,
+               text: text
+           });
+           let data = {
+               post: post
+           };
+           sendPOST('/api/post/create', {
+               data: data,
+               success: function (res) {
+                   $('#posts').prepend(res)
+                   console.log($('.post').toArray()[0]);
+                   let target = $('.post').toArray()[0]
+                   anime({
+                       targets: target,
+                       translateY: ['-10em', '0em'],
+                       opacity: [0, 1]
+                   })
+                   $("#post-text").val('')
+               }, error: function (err) {
+                   console.log(err);
+                   $('#status').html('Unauthorized')
+               }
+           });
+       }
