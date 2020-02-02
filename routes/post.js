@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let Post = require(__models + '/post.js');
-var ObjectId = require('mongodb').ObjectID;
+let ObjectId = require('mongodb').ObjectID;
 
 /* GET home page. */
 router.get('/v/:postID', async function (req, res, next) {
@@ -34,4 +34,10 @@ router.get('/v/:postID', async function (req, res, next) {
     res.render('post', {posts: posts});
 });
 
-module.exports = {index: 0, router: router};
+module.exports = {
+    index: 0,
+    router: router,
+    modules: {
+        moment: require('moment')
+    }
+};

@@ -1,11 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap");
 .secondary-text-color {
-  color: #757575;
-}
+  color: #757575; }
 
 .primary-color-text {
-  color: #212121;
-}
+  color: #212121; }
 
 #navbar {
   width: 100%;
@@ -14,34 +12,26 @@
   position: sticky;
   top: 0;
   display: flex;
-  justify-content: center;
-}
-#navbar #navbar-container {
-  padding: 1em;
-  display: grid;
-  grid-template-columns: 20em 20em 20em;
-}
-#navbar #nav-logo img {
-  height: 100%;
-}
-#navbar .nav-item {
-  padding: 0;
-  line-height: 5em;
-  height: 5em;
-}
-#navbar .nav-item a {
-  text-decoration: none;
-  color: #212121;
-}
-#navbar .nav-item span {
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-#navbar .nav-item .float-right {
-  float: right;
-}
-#navbar .nav-item .float-left {
-  float: left;
-}
+  justify-content: center; }
+  #navbar #navbar-container {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 20em 20em 20em; }
+  #navbar #nav-logo img {
+    height: 100%; }
+  #navbar .nav-item {
+    padding: 0;
+    line-height: 5em;
+    height: 5em; }
+    #navbar .nav-item a {
+      text-decoration: none;
+      color: #212121; }
+    #navbar .nav-item span {
+      margin-left: 0.5em;
+      margin-right: 0.5em; }
+    #navbar .nav-item .float-right {
+      float: right; }
+    #navbar .nav-item .float-left {
+      float: left; }
 
 /*# sourceMappingURL=navbar.css.map */

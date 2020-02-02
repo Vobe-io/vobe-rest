@@ -1,1 +1,10 @@
-{"version":3,"sourceRoot":"","sources":["../colors.sass","footer.sass"],"names":[],"mappings":"AAAQ;AAoBR;EACE,OAHqB;;;AAKvB;EACE,OARmB;;;ACdrB;EACE;EACA;EACA;EACA;EACA;EACA;;AAEA;EACE;;AAEF;EACE;EACA,ODCiB","file":"footer.css"}
+{
+	"version": 3,
+	"file": "footer.css",
+	"sources": [
+		"footer.sass",
+		"../colors.sass"
+	],
+	"names": [],
+	"mappings": "ACAA,OAAO,CAAC,kFAAI;AAoBZ,AAAA,qBAAqB,CAAC;EACpB,KAAK,EAHgB,OAAO,GAGG;;AAEjC,AAAA,mBAAmB,CAAC;EAClB,KAAK,EARc,OAAO,GAQG;;ADtB/B,AAAA,OAAO,CAAC;EACN,UAAU,EAAE,GAAG;EACf,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;EACb,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM,GAOc;EAbnC,AAQE,OARK,CAQL,YAAY,CAAC;IACX,MAAM,EAAE,SAAS,GAAG;EATxB,AAWE,OAXK,CAWL,CAAC,CAAC;IACA,eAAe,EAAE,IAAI;IACrB,KAAK,ECCY,OAAO,GDDK"
+}

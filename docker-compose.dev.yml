@@ -16,6 +16,8 @@ services:
     volumes:
       - ./vobe/:/vobe
       - .:/home/node/app
+    env_file:
+      - dev.env
   mongo:
     image: mongo
     container_name: vobe_mongo
@@ -24,6 +26,8 @@ services:
       - "27017:27017"
     volumes:
       - mongodata:/data/db
+    env_file:
+      - dev.env
 
 volumes:
   mongodata:
