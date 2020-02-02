@@ -28,9 +28,7 @@ const Table = require('cli-table');
 //global vars
 global.__root = __dirname;
 global.__models = path.join(__root, 'bin', 'models');
-global.__vobe = {
-    version: JSON.parse(fs.readFileSync(path.join(__root, 'package.json'), 'utf-8')).version
-};
+global.__vobe = JSON.parse(fs.readFileSync(path.join(__root, 'vobe.json'), 'utf-8'));
 
 
 console.log(`
