@@ -31,7 +31,7 @@ router.get('/v/:postID', async function (req, res, next) {
         .sort({date: -1})
         .limit(20);
 
-    res.render('snippets/post', {
+    res.render('post', {
         posts: posts,
         modules: {
             moment: require('moment')
