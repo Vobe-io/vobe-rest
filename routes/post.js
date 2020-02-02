@@ -14,11 +14,11 @@ router.get('/v/:postID', async function (req, res, next) {
             from: "users",
             localField: "owner",
             foreignField: "_id",
-            as: "ownerData"
+            as: "owner"
         }
     }, {
         $unwind: {
-            path: '$ownerData'
+            path: '$owner'
         }
     }, {
         $lookup: {
@@ -31,13 +31,15 @@ router.get('/v/:postID', async function (req, res, next) {
         .sort({date: -1})
         .limit(20);
 
-    res.render('post', {posts: posts});
+    res.render('snippets/post', {
+        posts: posts,
+        modules: {
+            moment: require('moment')
+        }
+    });
 });
 
 module.exports = {
     index: 0,
-    router: router,
-    modules: {
-        moment: require('moment')
-    }
+    router: router
 };
