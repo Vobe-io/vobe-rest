@@ -27,6 +27,9 @@ const Table = require('cli-table');
 //global vars
 global.__root = __dirname;
 global.__models = path.join(__root, 'bin', 'models');
+global.__vobe = {
+    version: JSON.parse(fs.readFileSync(path.join(__root, 'package.json'), 'utf-8')).version
+};
 
 
 console.log(`
@@ -39,6 +42,8 @@ console.log(`
    \\  $/  |  $$$$$$/| $$$$$$$/|  $$$$$$$ /$$| $$|  $$$$$$/
     \\_/    \\______/ |_______/  \\_______/|__/|__/ \\______/
 `);
+
+console.log('v-' + __vobe.version + '\n\n');
 
 
 const secrets = secretManager({
@@ -150,7 +155,7 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.render('http/error');
 });
 
 module.exports = app;

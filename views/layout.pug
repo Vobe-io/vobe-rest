@@ -8,4 +8,7 @@ html
       script(src="/js/vobe.js")
    body
       div#container
-         block content
+         include snippets/navbar
+         div#content
+            block content
+         include snippets/footer

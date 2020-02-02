@@ -1,17 +1,24 @@
 extends layout
 
 block content
-   link(rel='stylesheet', href='/style/post.css')
 
-   h1= user ? ('Welcome, ' + user.username + '.') : title
-   p Welcome to #{title}
+   link(rel='stylesheet' href='/style/sites/index.css')
 
    p#status
-   div#feed(style='width:100%; display: flex; justify-content: center')
+   div#feed
       div
-         div(style='text-align: center')
-            textarea#post-text
-            br
-            input(type='button' onclick='createPost($("#post-text").val())' value='send')
+         div#post-writer-container
+            div#post-writer
+               textarea#post-text(placeholder='Tell us something about yourself!')
+               #post-writer-actions
+                  button(type='button' onclick='createPost($("#post-text").val())').float-right
+                     img(src='/img/icons/send.svg')
          div#posts
             include snippets/post
+
+   script.
+       $('#post-text').keydown(function (e) {
+           if (e.ctrlKey && e.keyCode === 13) {
+               createPost($("#post-text").val())
+           }
+       });

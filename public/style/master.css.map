@@ -1,1 +1,10 @@
-{"version":3,"sourceRoot":"","sources":["colors.sass","master.sass"],"names":[],"mappings":"AAAQ;ACER;EACE;EACA","file":"master.css"}
+{
+	"version": 3,
+	"file": "master.css",
+	"sources": [
+		"master.sass",
+		"colors.sass"
+	],
+	"names": [],
+	"mappings": "ACAA,OAAO,CAAC,kFAAI;AAoBZ,AAAA,qBAAqB,CAAC;EACpB,KAAK,EAHgB,OAAO,GAGG;;AAEjC,AAAA,mBAAmB,CAAC;EAClB,KAAK,EARc,OAAO,GAQG;;ADtB/B,AAAA,CAAC,CAAC;EACA,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,kBAAkB;EAC/B,OAAO,EAAE,IAAI,GAAG;;AAElB,AAAA,IAAI,EAAE,IAAI,CAAC;EACT,MAAM,EAAE,CAAC,GAAG;;AAEd,AAAA,IAAI,CAAC;EACH,gBAAgB,ECLC,IAAI,GDKiB;;AAGxC,AAAA,QAAQ,CAAC;EACP,UAAU,EAAE,GAAG,GAAG"
+}
