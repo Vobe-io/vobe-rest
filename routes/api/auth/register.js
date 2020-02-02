@@ -15,6 +15,7 @@ router.post('/api/auth/register', function (req, res, next) {
         let userData = {
             email: req.body.email,
             username: req.body.username,
+            displayName: req.body.username,
             password: req.body.password,
             emailVerified: process.env.DEBUG
         };

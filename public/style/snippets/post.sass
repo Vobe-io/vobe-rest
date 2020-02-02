@@ -1,10 +1,10 @@
-@import "master.sass"
+@import "./../master.sass"
 
 .debug
   border: 2px solid red
 
 div
-//@extend .debug
+  //@extend .debug
 
 .post
   overflow: hidden
@@ -13,6 +13,8 @@ div
 
   border-radius: 0.5em
 
+  h3
+    color: $primary-color-dark
 
   .float-left
     float: left
@@ -33,13 +35,12 @@ div
     display: flex
 
     h3
-      color: $primary-color-dark
       margin: 0 0 0.25em
 
     & > img
       margin-left: 0.25em
 
-  .post-content
+  .post-holder
     padding: 0.75em 0.75em 0
     width: 27em
 
@@ -83,7 +84,7 @@ div
 
       textarea
         background-color: transparent
-        border: 0.2em solid #000
+        border: 0.2em solid $border-color
         border-radius: .5em
         padding: 0.5em
         width: 100%
@@ -93,5 +94,5 @@ div
       button
         margin-top: 0.5em
         background-color: transparent
-        border: 0.2em solid #000
+        border: 0.2em solid $border-color
         border-radius: .5em
