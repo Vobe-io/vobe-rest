@@ -1,3 +1,6 @@
 {
-  "version": "0.1.6-alpha"
+  "version": "0.1.7-alpha",
+  "mongodb": {
+    "uri": "mongodb://mongo:27017/vobe"
+  }
 }
