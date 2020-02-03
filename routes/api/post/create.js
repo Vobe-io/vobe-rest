@@ -50,7 +50,7 @@ router.post('/api/post/create', function (req, res, next) {
                 if(posts.length < 1)
                     return res.next();
 
-                res.render('snippets/post_raw', {
+                res.render('snippets/post', {
                     user: req.user,
                     post: posts[0],
                     modules: {
