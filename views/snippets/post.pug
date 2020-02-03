@@ -1,45 +1,31 @@
-link(rel='stylesheet', href='/style/snippets/post.css')
+.post(id='post-' + post._id)
+   .post-container(data-post-id=post._id)
+      .post-user
+         img(src='/img/icons/face.svg')
+      .post-holder
+         .post-content(data-post-id=post._id)
+            .post-head(data-post-id=post._id)
+               h3= post.owner.displayName || post.owner.username
 
-each post in posts
-   .post(id='post-' + post._id)
-      .post-container(data-post-id=post._id)
-         .post-user
-            img(src='/img/icons/face.svg')
-         .post-holder
-            .post-content(data-post-id=post._id)
-               .post-head(data-post-id=post._id)
-                  h3= post.owner.displayName || post.owner.username
+               if(post.owner.verified)
+                  img(src='/img/icons/verified.svg' style='height: 1em; transform: translateY(0.15em)' title='Verified User')
 
-                  if(post.owner.verified)
-                     img(src='/img/icons/verified.svg' style='height: 1em; transform: translateY(0.15em)' title='Verified User')
+               span(style='color: #999; margin-left: 0.5em')='@' + post.owner.username
 
-                  span(style='color: #999; margin-left: 0.5em')='@' + post.owner.username
+            span= post.text
 
-               span= post.text
+         .post-actions
+            span= post.children ? post.children.length : 0
+            button(onclick=`openComment("${post._id}")`)
+               img(src='/img/icons/comments.svg' style='transform: translateY(0.15em)' title='Reply to this Post')
+            span(style='color: #757575')= ' • ' + modules.moment(new Date(post.date)).fromNow()
+            button.float-right
+               img(src='/img/icons/arrow.svg' title='Up-vote this Post' style='transform: rotate(90deg)')
+            button.float-right
+               img(src='/img/icons/arrow.svg' title='Down-vote this Post' style='transform: rotate(-90deg)')
 
-            .post-actions
-               span= post.children ? post.children.length : 0
-               button(onclick=`openComment("${post._id}")`)
-                  img(src='/img/icons/comments.svg' style='transform: translateY(0.15em)' title='Reply to this Post')
-               span(style='color: #757575')= ' • ' + modules.moment(new Date(post.date)).fromNow()
-               button.float-right
-                  img(src='/img/icons/arrow.svg' title='Up-vote this Post' style='transform: rotate(90deg)')
-               button.float-right
-                  img(src='/img/icons/arrow.svg' title='Down-vote this Post' style='transform: rotate(-90deg)')
-
-            .post-comment(style='display: none' id='post-comment-' + post._id)
-               .post-comment-container
-                  textarea(id='comment-area-' + post._id)
-               .post-comment-actions
-                  button(onclick=`createPost($('#comment-area-${post._id}').val(), '${post._id}')`).float-right Answer
-
-script.
-    function openComment(id) {
-        $('.post-comment').fadeOut(0)
-        $('#post-comment-' + id).fadeIn(250)
-        $('#comment-area-' + id).focus()
-    }
-
-    $('.post-content').click(function (e) {
-        window.location.href = '/v/' + $(e.currentTarget).data('post-id')
-    })
+         .post-comment(style='display: none' id='post-comment-' + post._id)
+            .post-comment-container
+               textarea(id='comment-area-' + post._id)
+            .post-comment-actions
+               button(onclick=`createPost($('#comment-area-${post._id}').val(), '${post._id}')`).float-right Answer

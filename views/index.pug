@@ -14,7 +14,10 @@ block content
                   button(type='button' onclick='createPost($("#post-text").val())').float-right
                      img(src='/img/icons/send.svg')
          div#posts
-            include snippets/post
+            link(rel='stylesheet', href='/style/snippets/post.css')
+
+            each post in posts
+               include snippets/post
 
    script.
        $(document).ready(function () {
@@ -25,6 +28,10 @@ block content
                delay: anime.stagger(100),
                easing: 'easeOutExpo'
            })
+
+           $('.post-content').click(function (e) {
+               window.location.href = '/v/' + $(e.currentTarget).data('post-id')
+           })
        })
 
        $('#post-text').keydown(function (e) {
@@ -32,6 +39,12 @@ block content
                createPost($("#post-text").val())
            }
        });
+
+       function openComment(id) {
+           $('.post-comment').fadeOut(0)
+           $('#post-comment-' + id).fadeIn(250)
+           $('#comment-area-' + id).focus()
+       }
 
        function createPost(text, parent) {
            let post = JSON.stringify({
@@ -46,7 +59,6 @@ block content
                success: function (res) {
                    if (parent === undefined) {
                        $('#posts').prepend(res)
-                       console.log($('.post').toArray()[0]);
                        let target = $('.post').toArray()[0]
                        anime({
                            targets: target,

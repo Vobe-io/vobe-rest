@@ -18,10 +18,16 @@ script.
     let prevScrollpos = window.pageYOffset;
     window.onscroll = function() {
       var currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos)
-        $('#navbar').css('top', '0');
-      else
-        $('#navbar').css('top', '-5em');
+      let target = $('#navbar')
+      let isUp = prevScrollpos > currentScrollPos;
+      anime({
+        targets: '#navbar',
+        opacity: isUp ? 1 : 0,
+        begin: function(){
+            target.css('top', isUp ? '0': '-10em')
+        },
+        duration: 500
+      })
 
       prevScrollpos = currentScrollPos;
     }

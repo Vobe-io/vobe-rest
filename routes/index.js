@@ -1,7 +1,6 @@
 let express = require('express');
 let router = express.Router();
 
-let User = require(__models + '/user.js');
 let Post = require(__models + '/post.js');
 
 /* GET home page. */

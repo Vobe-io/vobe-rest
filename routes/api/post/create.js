@@ -1,5 +1,4 @@
 let express = require('express');
-let pug = require('pug');
 let Post = require(__bin + "/models/post.js");
 let User = require(__bin + "/models/user.js");
 let router = express.Router();
@@ -25,33 +24,35 @@ router.post('/api/post/create', function (req, res, next) {
                 if (err)
                     return next(err);
 
-                res.render('snippets/post', {
+                let posts = await Post
+                    .aggregate()
+                    .match({
+                        _id: p._id
+                    })
+                    .lookup({
+                        from: "users",
+                        localField: "owner",
+                        foreignField: "_id",
+                        as: "owner"
+                    })
+                    .unwind({
+                        path: '$owner'
+                    })
+                    .lookup({
+                        from: 'posts',
+                        localField: '_id',
+                        foreignField: 'parent',
+                        as: 'children'
+                    })
+                    .sort({date: -1})
+                    .limit(1);
+
+                if(posts.length < 1)
+                    return res.next();
+
+                res.render('snippets/post_raw', {
                     user: req.user,
-                    posts: await Post.aggregate([{
-                        $match: {
-                            _id: p._id
-                        }
-                    }, {
-                        $lookup: {
-                            from: "users",
-                            localField: "owner",
-                            foreignField: "_id",
-                            as: "owner"
-                        }
-                    }, {
-                        $unwind: {
-                            path: '$owner'
-                        }
-                    }, {
-                        $lookup: {
-                            from: 'posts',
-                            localField: '_id',
-                            foreignField: 'parent',
-                            as: 'children'
-                        }
-                    }])
-                        .sort({date: -1})
-                        .limit(20),
+                    post: posts[0],
                     modules: {
                         moment: require('moment')
                     }
