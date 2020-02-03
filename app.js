@@ -10,6 +10,8 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let sassMiddleware = require('node-sass-middleware');
+let RateLimit = require('express-rate-limit');
+let RateLimitMongoStore = require('rate-limit-mongo');
 
 let app = express();
 
@@ -60,10 +62,19 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://mongo:27017/vobe', {
+mongoose.connect(__vobe.mongodb.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+
+app.use(new RateLimit({
+    store: new RateLimitMongoStore({
+        uri: __vobe.mongodb.uri,
+        collectionName: 'expressRateRecords'
+    }),
+    max: 100,
+    windowMs: 15 * 60 * 1000
+}));
 
 app.use(session({
     resave: true,
@@ -83,6 +94,7 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.all('*', async (req, res, next) => {
     if (req.session.loggedIn)
