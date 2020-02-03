@@ -35,7 +35,8 @@ router.get('/v/:postID', async function (req, res, next) {
         posts: posts,
         modules: {
             moment: require('moment')
-        }
+        },
+        user: req.user
     });
 });
 

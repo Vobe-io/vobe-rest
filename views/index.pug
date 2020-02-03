@@ -44,15 +44,18 @@ block content
            sendPOST('/api/post/create', {
                data: data,
                success: function (res) {
-                   $('#posts').prepend(res)
-                   console.log($('.post').toArray()[0]);
-                   let target = $('.post').toArray()[0]
-                   anime({
-                       targets: target,
-                       translateY: ['-10em', '0em'],
-                       opacity: [0, 1]
-                   })
-                   $("#post-text").val('')
+                   if (parent === undefined) {
+                       $('#posts').prepend(res)
+                       console.log($('.post').toArray()[0]);
+                       let target = $('.post').toArray()[0]
+                       anime({
+                           targets: target,
+                           translateY: ['-10em', '0em'],
+                           opacity: [0, 1]
+                       })
+                       $("#post-text").val('')
+                   } else
+                       window.location.reload()
                }, error: function (err) {
                    console.log(err);
                    $('#status').html('Unauthorized')

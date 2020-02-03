@@ -10,4 +10,6 @@ mongodata/
 vobe/secrets.json
 vobe/certs
 
+*.css
 *.cmd
+*.map
