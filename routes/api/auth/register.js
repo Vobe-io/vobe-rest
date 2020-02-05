@@ -2,28 +2,30 @@ let express = require('express');
 let crypto = require('crypto-random-string');
 let User = require(__bin + "/models/user.js");
 let Verification = require(__bin + "/models/verification.js");
-let rateLimit = require("express-rate-limit");
+
+const rateLimiter = require(__bin + '/lib/rateLimiter');
+
 let router = express.Router();
 
-let { isEmailBurner } = require('burner-email-providers');
+let {isEmailBurner} = require('burner-email-providers');
 
 let sg = require('@sendgrid/mail');
 sg.setApiKey(process.env.SENDGRID_API_KEY);
 
-const createAccountLimiter = rateLimit({
+
+let rateLimit = rateLimiter.RateLimit({
     windowMs: 30 * 60 * 1000, // 30 minutes window
     max: 5, // start blocking after 5 requests
-    message:
-        "Too many accounts created from this IP"
+    message: "Too many accounts created from this IP"
 });
 
 /* GET home page. */
-router.post('/api/auth/register', createAccountLimiter, function (req, res, next) {
+router.post('/api/auth/register', rateLimit, function (req, res, next) {
     if (req.body.email &&
         req.body.username &&
         req.body.password) {
 
-        if(isEmailBurner(req.body.email))
+        if (isEmailBurner(req.body.email))
             return res.status(200).send({
                 success: true,
                 message: 'Just one more step: We have send an email to <b>' + req.body.email + '</b> please check your spam folder'
@@ -89,6 +91,8 @@ router.post('/api/auth/register', createAccountLimiter, function (req, res, next
 
         });
     }
-});
+}
+)
+;
 
 module.exports = {index: 0, router: router};
