@@ -5,29 +5,27 @@ let ObjectId = require('mongodb').ObjectID;
 
 /* GET home page. */
 router.get('/v/:postID', async function (req, res, next) {
-    let posts = await Post.aggregate([{
-        $match: {
+
+    let posts = await Post
+        .aggregate()
+        .match({
             _id: ObjectId(req.params.postID)
-        }
-    }, {
-        $lookup: {
+        })
+        .lookup({
             from: "users",
             localField: "owner",
             foreignField: "_id",
             as: "owner"
-        }
-    }, {
-        $unwind: {
+        })
+        .unwind({
             path: '$owner'
-        }
-    }, {
-        $lookup: {
+        })
+        .lookup({
             from: 'posts',
             localField: '_id',
             foreignField: 'parent',
             as: 'children'
-        }
-    }])
+        })
         .sort({date: -1})
         .limit(20);
 

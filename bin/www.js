@@ -2,7 +2,6 @@
 /**
  * Module dependencies.
  */
-global.__bin = __dirname;
 let app = require('../app');
 let debug = require('debug')('vobe:server');
 let http = require('http');

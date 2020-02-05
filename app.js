@@ -22,14 +22,12 @@ const mongoose = require('mongoose');
 // libs
 const secretManager = require('./bin/lib/secretManager');
 const User = require('./bin/models/user.js');
-const clc = require('cli-color');
-const Table = require('cli-table');
 
 //global vars
 global.__root = __dirname;
+global.__bin = path.join(__root, 'bin');
 global.__models = path.join(__root, 'bin', 'models');
 global.__vobe = JSON.parse(fs.readFileSync(path.join(__root, 'vobe.json'), 'utf-8'));
-
 
 console.log(`
  /$$    /$$          /$$                     /$$
@@ -50,6 +48,8 @@ const secrets = secretManager({
     generateNew: true
 });
 
+
+const routeLoader = require(path.join(__bin, 'lib', 'middleware', 'routeLoader.js'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -60,7 +60,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://mongo:27017/vobe', {
+mongoose.connect(__vobe.mongodb.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -93,54 +93,7 @@ app.all('*', async (req, res, next) => {
 });
 
 // LOAD ROUTES OUT OF /routes
-(function () {
-    let table = new Table({
-        head: ['PRIORITY', 'ROUTE', 'STATUS'],
-        chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}
-    });
-    let errors = [];
-    let routes = [];
-
-    function loadRoutes(p) {
-        console.log('LOADING ' + p);
-        fs.readdirSync(p, {withFileTypes: true, encoding: "utf-8"}).forEach(f => {
-            if (f.isDirectory())
-                loadRoutes(path.join(p, f.name));
-
-            if (f.name !== undefined && f.name.endsWith(".js")) {
-                let tData = {
-                    passed: false,
-                    data: undefined,
-                    path: p,
-                    name: f.name
-                };
-                try {
-                    tData.data = require(path.join(p, f.name));
-                    tData.passed = true;
-                    routes.push(tData);
-                } catch (e) {
-                    errors.push(e);
-                }
-            }
-        });
-    }
-
-    loadRoutes(path.join(__dirname, 'routes'));
-
-    routes
-        .sort((a, b) => (a.data.index ? a.data.index : 0) - (b.data.index ? b.data.index : 0))
-        .forEach(r => {
-            if (r.passed) {
-                app.use(r.data.router ? r.data.router : r);
-                table.push([r.data.index, path.join(r.path, r.name), clc.green('PASSED')]);
-            } else
-                table.push([r.data.index, path.join(r.path, r.name), clc.red('ERROR')]);
-        });
-
-    console.log(table.toString());
-    if (errors.length > 0) console.log(clc.bold.red('\n\nENCOUNTERED ERROR(S) WHILE LOADING ROUTES:\n'));
-    errors.forEach(e => console.log(clc.red(e)));
-})();
+app.use(routeLoader);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

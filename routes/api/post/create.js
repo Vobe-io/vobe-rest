@@ -1,17 +1,17 @@
 let express = require('express');
 let Post = require(__bin + "/models/post.js");
 let User = require(__bin + "/models/user.js");
-let rateLimit = require("express-rate-limit");
 let router = express.Router();
 
-const createPostLimiter = rateLimit({
+const rateLimiter = require(__bin + '/lib/rateLimiter');
+
+let rateLimit = rateLimiter.RateLimit({
     windowMs: 30 * 1000, // 30 seconds window
     max: 5, // start blocking after 5 requests
-    message:
-        "Too many posts created from this IP, please try again in a minute"
+    message: "Too many posts created from this IP, please try again in a minute"
 });
 
-router.post('/api/post/create', createPostLimiter, function (req, res, next) {
+router.post('/api/post/create', rateLimit, function (req, res, next) {
     if (!req.session.loggedIn)
         return res.send({
             success: false,
