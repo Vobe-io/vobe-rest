@@ -65,6 +65,8 @@ mongoose.connect('mongodb://mongo:27017/vobe', {
     useUnifiedTopology: true
 });
 
+app.set('trust proxy', 1); // Needed because nodejs is behind proxy
+
 app.use(session({
     resave: true,
     saveUninitialized: true,
