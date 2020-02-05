@@ -1,6 +1,8 @@
 let express = require('express');
 let Post = require(__bin + "/models/post.js");
 let User = require(__bin + "/models/user.js");
+let xss = require('xss');
+let parse = require(__bin + '/lib/postParser');
 let router = express.Router();
 
 router.post('/api/post/create', function (req, res, next) {
@@ -18,7 +20,7 @@ router.post('/api/post/create', function (req, res, next) {
 
                 owner: req.user._id,
                 parent: post.parent,
-                text: post.text
+                text: parse(xss(post.text))
 
             }, async function (err, p) {
                 if (err)
