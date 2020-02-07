@@ -12,7 +12,7 @@
 
                span(style='color: #999; margin-left: 0.5em')='@' + post.owner.username
 
-            span !{post.text}
+            span.post-text !{post.text}
 
          .post-actions
             span= post.children ? post.children.length : 0
