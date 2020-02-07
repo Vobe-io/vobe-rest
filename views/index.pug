@@ -46,6 +46,20 @@ block content
            $('#comment-area-' + id).focus()
        }
 
+       function votePost(id, upVote) {
+           sendPOST('/api/post/vote', {
+               data: {
+                   postId: id,
+                   vote: upVote ? 'up' : 'down'
+               },
+               success: function (res) {
+                   let isUp = res.vote.vote === 'up';
+                   $('#post-vote-' + (isUp ? 'up' : 'down') + '-' + id).attr('src', '/img/icons/arrow_active.svg');
+                   $('#post-vote-' + (!isUp ? 'up' : 'down') + '-' + id).attr('src', '/img/icons/arrow.svg');
+               }
+           });
+       }
+
        function createPost(text, parent) {
            let post = JSON.stringify({
                parent: parent,
