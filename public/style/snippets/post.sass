@@ -1,10 +1,10 @@
 @import "./../master.sass"
 
 .debug
-  border: 2px solid red
+  //border: 2px solid red
 
 div
-  //@extend .debug
+  @extend .debug
 
 .post
   overflow: hidden
@@ -13,8 +13,11 @@ div
 
   border-radius: 0.5em
 
-  h3
+  a
     color: $primary-color-dark
+    text-decoration: none
+    font-weight: 700
+    margin-bottom: 0.25em
 
   .float-left
     float: left

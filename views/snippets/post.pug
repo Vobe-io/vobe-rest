@@ -1,11 +1,11 @@
 .post(id='post-' + post._id)
    .post-container(data-post-id=post._id)
-      .post-user
+      a.post-user(href='/' + post.owner.username)
          img(src='/img/icons/face.svg')
       .post-holder
          .post-content(data-post-id=post._id)
             .post-head(data-post-id=post._id)
-               h3= post.owner.displayName || post.owner.username
+               a(href='/' + post.owner.username)= post.owner.displayName || post.owner.username
 
                if(post.owner.verified)
                   img(src='/img/icons/verified.svg' style='height: 1em; transform: translateY(0.15em)' title='Verified User')
