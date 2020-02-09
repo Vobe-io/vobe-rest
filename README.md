@@ -4,7 +4,9 @@
 [Vobe](https://vobe.io) is a social media platform in an early development phase.\
 Our vision is to bring all the great aspects of other platforms together into one platform.\
 We want to achieve this by building a great community to respond to feedback as quickly as possible.
-Beeing open source is just the first step.
+Beeing open source is just the first step. \
+\
+[Join our Discord](https://discord.gg/RB3DTE9)
 
 ## Documentation
 
@@ -17,4 +19,4 @@ All kinds of contributions are welcome :raised_hands:! The most basic way to sho
 Thanks again for your support, it is much appreciated! :pray:
 
 ## License
-Apache-2.0. See `LICENSE` for more details.
+GNU General Public License v3.0. See `LICENSE` for more details.
