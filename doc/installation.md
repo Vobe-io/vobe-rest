@@ -1,6 +1,6 @@
 ## Installation
-First of all you have to find any domain related stuff in the docker-compose.yml and replace it with your domain.\
-After that enter you SendGrid api token in the `.env` file:
+First of all you have to find all domain related stuff in the docker-compose.yml and replace it with your domain.\
+After that enter your SendGrid api token in the `.env` file:
 ```shell script
 # email
 SENDGRID_API_KEY='YOUR KEY'
