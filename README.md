@@ -1,26 +1,20 @@
-# vobe
+<p align="center"><a href="https://github.com/Vobe-io/vobe"></a><img src="https://raw.githubusercontent.com/Vobe-io/vobe/master/public/img/logo/vobe.svg?sanitize=true" alt="Vobe" width="600"><a></a></p>
 
+## About
+[Vobe](https://vobe.io) is a social media platform in an early development phase.\
+Our vision is to bring all the great aspects of other platforms together into one platform.\
+We want to achieve this by building a great community to respond to feedback as quickly as possible.
+Beeing open source is just the first step.
 
-## Installation
+## Documentation
 
-```shell script
-docker-compose up --build -d
-```
-If you want to install and test everything locally, you should use:
+* [Installation](doc/installation.md)
+* [Development](doc/development.md)
+* [FAQ](doc/faq.md)
 
-```shell script
-docker-compose -f docker-compose.dev.yml up --build -d
-```
+## How can I help?
+All kinds of contributions are welcome :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon: You can also support this project by [**becoming a sponsor on GitHub**](https://vobe.io)(Currently not supported) :clap: or by making a [Paypal donation](https://vobe.io)(Also not supported yet) to ensure this journey continues indefinitely! :rocket:
+Thanks again for your support, it is much appreciated! :pray:
 
-## Common Errors
-##### Can't access *any file in /vobe*
-This error usually appears, when the docker container doesn't
-has enough permission to read/write files.
-The easiest way to fix that is by giving the whole folder default 
-Permissions.\
-*But* This also makes it possible to write/read on files in there without any permissions.
-So take care that the Host-Computer is secured enough
-
-```shell script
-chown $USER:$USER -R ./vobe/*
-```
+## License
+Apache-2.0. See `LICENSE` for more details.
