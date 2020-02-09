@@ -30,6 +30,7 @@ function loadRoutes(p) {
                 routes.push(tData);
             } catch (e) {
                 errors.push(e);
+                routes.push(tData);
             }
         }
     });
@@ -38,13 +39,13 @@ function loadRoutes(p) {
 loadRoutes(path.join(__root, 'routes'));
 
 routes
-    .sort((a, b) => (a.data.index ? a.data.index : 0) - (b.data.index ? b.data.index : 0))
+    .sort((a, b) => (a.data ? a.data.index : 0) - (b.data ? b.data.index : 0))
     .forEach(r => {
         if (r.passed) {
             app.use(r.data.router ? r.data.router : r);
             table.push([r.data.index, path.join(r.path, r.name), clc.green('PASSED')]);
         } else
-            table.push([r.data.index, path.join(r.path, r.name), clc.red('ERROR')]);
+            table.push(['?', path.join(r.path, r.name), clc.red('ERROR')]);
     });
 
 console.log(table.toString());

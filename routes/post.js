@@ -6,28 +6,7 @@ let ObjectId = require('mongodb').ObjectID;
 /* GET home page. */
 router.get('/v/:postID', async function (req, res, next) {
 
-    let posts = await Post
-        .aggregate()
-        .match({
-            _id: ObjectId(req.params.postID)
-        })
-        .lookup({
-            from: "users",
-            localField: "owner",
-            foreignField: "_id",
-            as: "owner"
-        })
-        .unwind({
-            path: '$owner'
-        })
-        .lookup({
-            from: 'posts',
-            localField: '_id',
-            foreignField: 'parent',
-            as: 'children'
-        })
-        .sort({date: -1})
-        .limit(20);
+    let posts = await Post.getRichPost(1);
 
     res.render('post', {
         posts: posts,
