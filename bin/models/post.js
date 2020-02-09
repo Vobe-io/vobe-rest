@@ -28,31 +28,40 @@ let PostSchema = new mongoose.Schema({
     }
 });
 
-PostSchema.statics.getRichPost = async function (limit = 20) {
-    let post = await this
-        .aggregate()
-        .match({
-            'parent': null
-        })
-        .sort({
-            date: -1
-        })
-        .limit(limit)
-        .lookup({
-            from: 'users',
-            localField: 'owner',
-            foreignField: '_id',
-            as: 'owner'
-        })
-        .unwind({
-            path: '$owner'
-        })
-        .lookup({
-            from: 'posts',
-            as: 'children',
-            localField: '_id',
-            foreignField: 'parent'
-        });
+PostSchema.statics.getRichPost = async function (aggs = []) {
+    let aggregations = [
+        {
+            $match: {
+                parent: null
+            }
+        }, {
+            $sort: {
+                date: -1
+            }
+        }, {
+            $lookup: {
+                from: 'users',
+                localField: 'owner',
+                foreignField: '_id',
+                as: 'owner'
+            }
+        }, {
+            $unwind: {
+                path: '$owner'
+            }
+        }, {
+            $lookup: {
+                from: 'posts',
+                as: 'children',
+                localField: '_id',
+                foreignField: 'parent'
+            }
+        }
+    ];
+
+    aggs.forEach(agg => aggregations.push(agg));
+
+    let post = await this.aggregate(aggregations);
     return postPipeline.process(post);
 };
 
