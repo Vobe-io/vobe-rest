@@ -1,11 +1,11 @@
 .post(id='post-' + post._id)
    .post-container(data-post-id=post._id)
-      .post-user
+      a.post-user(href='/' + post.owner.username)
          img(src='/img/icons/face.svg')
       .post-holder
          .post-content(data-post-id=post._id)
             .post-head(data-post-id=post._id)
-               h3= post.owner.displayName || post.owner.username
+               a(href='/' + post.owner.username)= post.owner.displayName || post.owner.username
 
                if(post.owner.verified)
                   img(src='/img/icons/verified.svg' style='height: 1em; transform: translateY(0.15em)' title='Verified User')
@@ -19,10 +19,10 @@
             button(onclick=`openComment("${post._id}")`)
                img(src='/img/icons/comments.svg' style='transform: translateY(0.15em)' title='Reply to this Post')
             span(style='color: #757575')= ' • ' + modules.moment(new Date(post.date)).fromNow()
-            button.float-right
-               img(src='/img/icons/arrow.svg' title='Up-vote this Post' style='transform: rotate(90deg)')
-            button.float-right
-               img(src='/img/icons/arrow.svg' title='Down-vote this Post' style='transform: rotate(-90deg)')
+            button.float-right(onclick=`votePost("${post._id}", true)`)
+               img(src='/img/icons/arrow.svg' id='post-vote-up-' + post._id title='Up-vote this Post' style='transform: rotate(90deg)')
+            button.float-right(onclick=`votePost("${post._id}", false);`)
+               img(src='/img/icons/arrow.svg' id='post-vote-down-' + post._id title='Down-vote this Post' style='transform: rotate(-90deg)')
 
          .post-comment(style='display: none' id='post-comment-' + post._id)
             .post-comment-container

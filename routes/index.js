@@ -10,6 +10,10 @@ router.get('/', async function (req, res, next) {
         .match({
             'parent': null
         })
+        .sort({
+            date: -1
+        })
+        .limit(20)
         .lookup({
             from: 'users',
             localField: 'owner',
@@ -24,11 +28,7 @@ router.get('/', async function (req, res, next) {
             as: 'children',
             localField: '_id',
             foreignField: 'parent'
-        })
-        .sort({
-            date: -1
-        })
-        .limit(20);
+        });
 
     res.render('index', {
         title: process.env.web_name || 'index',

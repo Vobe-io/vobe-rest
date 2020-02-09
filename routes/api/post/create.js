@@ -1,6 +1,6 @@
 let express = require('express');
-let Post = require(__bin + "/models/post.js");
-let User = require(__bin + "/models/user.js");
+let Post = require(__bin + '/models/post.js');
+let User = require(__bin + '/models/user.js');
 let xss = require('xss');
 let parse = require(__bin + '/lib/postParser');
 let router = express.Router();
@@ -33,7 +33,7 @@ router.post('/api/post/create', rateLimit, function (req, res, next) {
             }, async function (err, p) {
                 if (err)
                     return next(err);
-
+                
                 let posts = await Post
                     .aggregate()
                     .match({
