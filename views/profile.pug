@@ -2,18 +2,7 @@ extends layout
 
 block content
    div#data
-
-      script.
-         $.ajax({
-            url: window.location.origin + '/api/profile',
-            method: 'POST',
-            data: {username: '#{username}'},
-            dataType: 'json',
-            success: function (res) {
-               $('#data').html(res[0].username)
-            },
-            error: function (err) {
-               console.log(err);
-               $('#status').html(err.responseText)
-            }
-         });
+      if profile === undefined
+         h1='\'' + params.username + '\' does not exist.'
+      else
+         h1=profile.username
