@@ -4,10 +4,12 @@ block content
 
    link(rel='stylesheet' href='/style/sites/index.css')
 
-   p#status
    link(rel='stylesheet', href='/style/snippets/post.css')
-   each post in posts
-      include snippets/post
+   if posts
+      each post in posts
+         include snippets/post
+   else
+      p= status
 
 
 
