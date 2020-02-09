@@ -9,8 +9,8 @@ services:
     restart: always
     environment:
       LETSENCRYPT_EMAIL: timoaeckerle@gmx.de
-      LETSENCRYPT_HOST: vobe.io
-      VIRTUAL_HOST: vobe.io
+      LETSENCRYPT_HOST: vobe.io, www.vobe.io
+      VIRTUAL_HOST: vobe.io, www.vobe.io
       VIRTUAL_PORT: 80
     links:
       - mongo

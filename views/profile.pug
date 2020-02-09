@@ -2,4 +2,7 @@ extends layout
 
 block content
    div#data
-      h1=user.username || '[NOT FOUND]'
+      if profile === undefined
+         h1='\'' + params.username + '\' does not exist.'
+      else
+         h1=profile.username
