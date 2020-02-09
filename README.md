@@ -4,7 +4,7 @@
 Vobe is a social media platform in an early development phase.\
 Our vision is to bring all the great aspects of other platforms together into one platform.\
 We want to achieve this by building a great community to respond to feedback as quickly as possible.
-Beeing open source is just the first step.\
+Beeing open source is just the first step.
 
 ## Documentation
 
