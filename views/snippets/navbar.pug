@@ -9,6 +9,8 @@ div#navbar
             if (user)
                 img(src='/img/icons/face.svg'  style='margin-bottom: -0.35em; margin-right: 0.25em')
                 a(href='/'+ user.username)=user.username
+                span |
+                a(href='/logout') Logout
             else
                 a(href='/login') Login
                 span |
