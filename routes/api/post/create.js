@@ -1,7 +1,7 @@
 let express = require('express');
 let Post = require(__bin + '/models/post.js');
 let User = require(__bin + '/models/user.js');
-let xss = require('xss');
+var xssFilters = require('xss-filters');
 let parse = require(__bin + '/lib/postParser');
 let router = express.Router();
 
@@ -13,7 +13,7 @@ let rateLimit = rateLimiter.RateLimit({
     message: "Too many posts created from this IP, please try again in a minute"
 });
 
-router.post('/api/post/create', rateLimit, function (req, res, next) {
+router.post('/api/post/create', function (req, res, next) {
     if (!req.session.loggedIn)
         return res.send({
             success: false,
@@ -28,7 +28,7 @@ router.post('/api/post/create', rateLimit, function (req, res, next) {
 
                 owner: req.user._id,
                 parent: post.parent,
-                text: parse(xss(post.text))
+                text: parse(xssFilters.inHTMLData(post.text))
 
             }, async function (err, p) {
                 if (err)
