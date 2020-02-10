@@ -19,16 +19,16 @@ block content
                 each post in posts
                     include snippets/post
 
-   script.
-       $(document).ready(function () {
-           anime({
-               targets: '.post',
-               translateX: ['-7em', '0'],
-               opacity: [0, 1],
-               delay: anime.stagger(100),
-               easing: 'easeOutExpo'
-           })
-       })
+    script.
+        $(document).ready(function () {
+            anime({
+                targets: '.post',
+                translateX: ['-7em', '0'],
+                opacity: [0, 1],
+                delay: anime.stagger(100),
+                easing: 'easeOutExpo'
+            })
+        })
 
         $('#post-text').keydown(function (e) {
             if (e.ctrlKey && e.keyCode === 13) {
