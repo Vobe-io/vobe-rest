@@ -13,7 +13,7 @@ let rateLimit = rateLimiter.RateLimit({
     message: "Too many posts created from this IP, please try again in a minute"
 });
 
-router.post('/api/post/create', function (req, res, next) {
+router.post('/api/post/create', rateLimit, function (req, res, next) {
     if (!req.session.loggedIn)
         return res.send({
             success: false,
