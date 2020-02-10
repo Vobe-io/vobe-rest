@@ -2,22 +2,22 @@ extends layout
 
 block content
 
-   link(rel='stylesheet' href='/style/sites/index.css')
+    link(rel='stylesheet' href='/style/sites/index.css')
 
-   p#status
-   div#feed
-      div
-         div#post-writer-container
-            div#post-writer
-               textarea#post-text(placeholder='Tell us something about yourself!')
-               #post-writer-actions
-                  button(type='button' onclick='createPost($("#post-text").val())').float-right
-                     img(src='/img/icons/send.svg')
-         div#posts
-            link(rel='stylesheet', href='/style/snippets/post.css')
+    div#feed
+        div
+            div#post-writer-container
+                div#post-writer
+                    textarea#post-text(placeholder='Tell us something about yourself!')
+                    #post-writer-actions
+                        button(type='button' onclick='createPost($("#post-text").val())').float-right
+                            img(src='/img/icons/send.svg')
 
-            each post in posts
-               include snippets/post
+            h1#status
+            div#posts
+                link(rel='stylesheet', href='/style/snippets/post.css')
+                each post in posts
+                    include snippets/post
 
    script.
        $(document).ready(function () {
@@ -30,57 +30,58 @@ block content
            })
        })
 
-       $('#post-text').keydown(function (e) {
-           if (e.ctrlKey && e.keyCode === 13) {
-               createPost($("#post-text").val())
-           }
-       });
+        $('#post-text').keydown(function (e) {
+            if (e.ctrlKey && e.keyCode === 13) {
+                createPost($("#post-text").val())
+            }
+        });
 
-       function openComment(id) {
-           $('.post-comment').fadeOut(0)
-           $('#post-comment-' + id).fadeIn(250)
-           $('#comment-area-' + id).focus()
-       }
+        function openComment(id) {
+            $('.post-comment').fadeOut(0)
+            $('#post-comment-' + id).fadeIn(250)
+            $('#comment-area-' + id).focus()
+        }
 
-       function votePost(id, upVote) {
-           sendPOST('/api/post/vote', {
-               data: {
-                   postId: id,
-                   vote: upVote ? 'up' : 'down'
-               },
-               success: function (res) {
-                   let isUp = res.vote.vote === 'up';
-                   $('#post-vote-' + (isUp ? 'up' : 'down') + '-' + id).attr('src', '/img/icons/arrow_active.svg');
-                   $('#post-vote-' + (!isUp ? 'up' : 'down') + '-' + id).attr('src', '/img/icons/arrow.svg');
-               }
-           });
-       }
+        function votePost(id, upVote) {
+            sendPOST('/api/post/vote', {
+                data: {
+                    postId: id,
+                    vote: upVote ? 'up' : 'down'
+                },
+                success: function (res) {
+                    let isUp = res.vote.vote === 'up';
+                    $('#post-vote-' + (isUp ? 'up' : 'down') + '-' + id).attr('src', '/img/icons/arrow_active.svg');
+                    $('#post-vote-' + (!isUp ? 'up' : 'down') + '-' + id).attr('src', '/img/icons/arrow.svg');
+                }
+            });
+        }
 
-       function createPost(text, parent) {
-           let post = JSON.stringify({
-               parent: parent,
-               text: text
-           });
-           let data = {
-               post: post
-           };
-           sendPOST('/api/post/create', {
-               data: data,
-               success: function (res) {
-                   if (parent === undefined) {
-                       $('#posts').prepend(res)
-                       let target = $('.post').toArray()[0]
-                       anime({
-                           targets: target,
-                           translateY: ['-10em', '0em'],
-                           opacity: [0, 1]
-                       });
-                       $("#post-text").val('')
-                   } else
-                       window.location.reload()
-               }, error: function (err) {
-                   console.log(err);
-                   $('#status').html('Unauthorized')
-               }
-           });
-       }
+        function createPost(text, parent) {
+            let post = JSON.stringify({
+                parent: parent,
+                text: text
+            });
+            let data = {
+                post: post
+            };
+            sendPOST('/api/post/create', {
+                data: data,
+                success: function (res) {
+                    $('#status').html('');
+                    if (parent === undefined) {
+                        $('#posts').prepend(res)
+                        let target = $('.post').toArray()[0]
+                        anime({
+                            targets: target,
+                            translateY: ['-10em', '0em'],
+                            opacity: [0, 1]
+                        });
+                        $("#post-text").val('')
+                    } else
+                        window.location.reload()
+                }, error: function (err) {
+                    console.log(err);
+                    $('#status').html(err.responseJSON.error);
+                }
+            });
+        }

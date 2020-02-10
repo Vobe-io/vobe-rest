@@ -1,8 +1,8 @@
 let express = require('express');
 let Post = require(__bin + '/models/post.js');
 let User = require(__bin + '/models/user.js');
-var xssFilters = require('xss-filters');
-let parse = require(__bin + '/lib/postParser');
+let xssFilters = require('xss-filters');
+let PostHandler = require(__bin + '/lib/PostHandler');
 let router = express.Router();
 
 const rateLimiter = require(__bin + '/lib/rateLimiter');
@@ -15,20 +15,18 @@ let rateLimit = rateLimiter.RateLimit({
 
 router.post('/api/post/create', rateLimit, function (req, res, next) {
     if (!req.session.loggedIn)
-        return res.send({
-            success: false,
-            message: 'You need to be logged in to create a post'
-        });
-
+        return res.status(401).send({error: 'You need to be logged in to create a post'});
     User.isEmailVerified(req.user._id, (verified) => {
         if (verified) {
             let post = JSON.parse(req.body.post);
+
+            if(!PostHandler.checkLength(post.text)) return res.status(403).send({error: 'Post to long'});
 
             Post.create({
 
                 owner: req.user._id,
                 parent: post.parent,
-                text: parse(xssFilters.inHTMLData(post.text))
+                text: PostHandler.parse(xssFilters.inHTMLData(post.text))
 
             }, async function (err, p) {
                 if (err)
@@ -68,12 +66,7 @@ router.post('/api/post/create', rateLimit, function (req, res, next) {
                     }
                 });
             });
-        } else {
-            return res.send({
-                success: false,
-                message: 'Your account must be verified'
-            });
-        }
+        } else return res.status(401).send({error: 'Your account must be verified'});
     });
 });
 
