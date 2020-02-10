@@ -12,7 +12,7 @@
             img(src='/img/icons/verified.svg').user-badge
 
       a(href='/v/' + post._id).post-content
-         span= post.text
+         span.post-text !{post.text}
 
       .post-actions
          span=post.children.length > 0 ? post.children.length : ''
