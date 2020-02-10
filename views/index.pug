@@ -28,10 +28,6 @@ block content
                delay: anime.stagger(100),
                easing: 'easeOutExpo'
            })
-
-           $('.post-content').click(function (e) {
-               window.location.href = '/v/' + $(e.currentTarget).data('post-id')
-           })
        })
 
        $('#post-text').keydown(function (e) {

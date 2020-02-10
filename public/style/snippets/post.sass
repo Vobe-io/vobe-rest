@@ -1,64 +1,51 @@
 @import "./../master.sass"
 
 
-
 .post
-  overflow: hidden
-  width: 30em
-  margin: 1em 1em 0
+  $grid-height: 6em
 
-  border-radius: 0.5em
+  display: grid
+  grid-template-columns: $grid-height 20em 2em
+  grid-template-rows: 1fr
+  grid-template-areas: ". ."
 
-  a
-    color: $primary-color-dark
-    text-decoration: none
-    font-weight: 700
-    margin-bottom: 0.25em
-
-  .float-left
-    float: left
-
-  .float-right
-    float: right
-
-
-  .post-container
+  .post-profile
     display: flex
-    padding: 1.2em
+    justify-content: center
 
-    &:hover
-      background-color: $divider-color
-      cursor: pointer
-
-  .post-head
-    display: flex
-
-    h3
-      margin: 0 0 0.25em
-
-    & > img
-      margin-left: 0.25em
-
-  .post-holder
-    padding: 0.75em 0.75em 0
-    width: 27em
-
-    .post-content
-      .post-text
-        word-break: break-all
-
-    .post-actions
-      margin-top: 1em
-
-      span
-        margin-right: 0.25em
+    a
+      height: $grid-height *.5
 
       img
-        height: 1em
+        height: $grid-height *.5
 
-      & > div
-        display: flex
-        align-items: center
+  .post-container
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: 2em 1fr 2em
+    grid-column-gap: 0
+    grid-row-gap: 0
+
+    .post-header
+      display: flex
+      align-items: center
+
+      .user-badge
+        height: 1em
+        margin-left: 0.25em
+
+      a
+        font-weight: 700
+        color: $primary-color
+        text-decoration: none
+
+    .post-content
+      text-decoration: none
+      color: $primary-color-text
+
+    .post-actions
+      display: flex
+      align-items: center
 
       button
         background-color: transparent
@@ -67,35 +54,17 @@
         &:hover
           cursor: pointer
 
-  .post-user
-    width: 4em
-    height: 4em
-    display: flex
-    justify-content: center
-    align-items: center
+        img
+          height: 1em
+          width: 1em
 
-    & > img
-      width: 2.75em
-      height: 2.75em
+  .post-votes
+    margin-top: 1em
 
-  .post-comment
-    margin-top: 2em
+    button
+      background-color: transparent
+      border: none
 
-    .post-comment-container
-      display: flex
-      justify-content: center
-
-      textarea
-        background-color: transparent
-        border: 0.2em solid $border-color
-        border-radius: .5em
-        padding: 0.5em
-        width: 100%
-        resize: none
-
-    .post-comment-actions
-      button
-        margin-top: 0.5em
-        background-color: transparent
-        border: 0.2em solid $border-color
-        border-radius: .5em
+    img
+      height: 1em
+      width: 1em
