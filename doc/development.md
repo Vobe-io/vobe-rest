@@ -22,8 +22,6 @@ Create a file called `docker-reload.cmd`:
 ```cmd
 docker-compose -f docker-compose.dev.yml down
 @echo off
-del node_modules\\node-sass /Q/S
-del node_modules\\bcrypt /Q/S
 docker-compose -f docker-compose.dev.yml up --build -d
 docker attach vobe_node
 ```
@@ -35,8 +33,6 @@ If you are using Linux create `docker-reload.sh`:
 ```shell script
 #!/bin/sh
 docker-compose -f docker-compose.dev.yml down
-rm node_modules/node-sass
-rm node_modules/bcrypt
 docker-compose -f docker-compose.dev.yml up --build -d
 docker attach vobe_node
 ```
