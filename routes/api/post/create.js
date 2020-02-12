@@ -13,24 +13,27 @@ let rateLimit = rateLimiter.RateLimit({
     message: "Too many posts created from this IP, please try again in a minute"
 });
 
-router.post('/api/post/create', rateLimit, function (req, res, next) {
+router.post('/api/post/create', function (req, res, next) {
     if (!req.session.loggedIn)
-        return res.status(401).send({error: 'You need to be logged in to create a post'});
+        return res.send({success: false, message: 'You need to be logged in to create a post'});
     User.isEmailVerified(req.user._id, (verified) => {
         if (verified) {
-            let post = JSON.parse(req.body.post);
+            let post = req.body.post;
+            console.log(post.text);
 
-            if(!PostHandler.checkLength(post.text)) return res.status(403).send({error: 'Post to long'});
+            if(!PostHandler.checkLength(post.text)) return res.send({success: false, message: 'Post to long'});
 
             Post.create({
 
                 owner: req.user._id,
-                parent: post.parent,
+                //parent: 'test',
                 text: PostHandler.parse(xssFilters.inHTMLData(post.text))
 
             }, async function (err, p) {
-                if (err)
+                if (err) {
+                    console.log(err.message);
                     return next(err);
+                }
                 
                 let posts = await Post
                     .aggregate()
@@ -58,15 +61,16 @@ router.post('/api/post/create', rateLimit, function (req, res, next) {
                 if(posts.length < 1)
                     return res.next();
 
-                res.render('snippets/post', {
+                /*res.render('snippets/post', {
                     user: req.user,
                     post: posts[0],
                     modules: {
                         moment: require('moment')
                     }
-                });
+                });*/
+                res.send({success: true, message: ''});
             });
-        } else return res.status(401).send({error: 'Your account must be verified'});
+        } else return res.send({success: false, message: 'Your account must be verified'});
     });
 });
 

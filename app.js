@@ -3,6 +3,7 @@ let fs = require("fs");
 let debug = require('debug')('vobe:server');
 
 let express = require('express');
+let cors = require('cors');
 
 // EXPRESS MIDDLEWARE
 let createError = require('http-errors');
@@ -12,6 +13,9 @@ let logger = require('morgan');
 let sassMiddleware = require('node-sass-middleware');
 
 let app = express();
+app.use(cors({origin: [
+        "http://vobe.io"
+    ], credentials: true}));
 
 // MONGODB
 const session = require('express-session');

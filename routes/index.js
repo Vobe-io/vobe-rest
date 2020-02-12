@@ -18,4 +18,11 @@ router.get('/', async function (req, res, next) {
     });
 });
 
+router.post('/', async function (req, res, next) {
+    let posts = await Post.getRichPost();
+    res.send({
+        posts: posts,
+    });
+});
+
 module.exports = {index: 0, router: router};

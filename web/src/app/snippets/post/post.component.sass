@@ -1,0 +1,78 @@
+@import "../../pub-styles/colors"
+
+
+.post
+  $grid-height: 6em
+  border-radius: 0.5em
+
+  &:hover
+    background-color: $divider-color
+    transition: 50ms
+
+  display: grid
+  grid-template-columns: $grid-height 20em 2em
+  grid-template-rows: 1fr
+  grid-template-areas: ". ."
+
+  .post-profile
+    display: flex
+    justify-content: center
+
+    a
+      height: $grid-height *.5
+
+      img
+        height: $grid-height *.5
+
+  .post-container
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: 2em 1fr 2em
+    grid-column-gap: 0
+    grid-row-gap: 0
+
+    .post-header
+      display: flex
+      align-items: center
+
+      .user-badge
+        height: 1em
+        margin-left: 0.25em
+
+      a
+        font-weight: 700
+        color: $primary-color
+        text-decoration: none
+
+    .post-text
+      word-break: break-all
+
+    .post-content
+      text-decoration: none
+      color: $primary-color-text
+
+    .post-actions
+      display: flex
+      align-items: center
+
+      button
+        background-color: transparent
+        border: none
+
+        &:hover
+          cursor: pointer
+
+        img
+          height: 1em
+          width: 1em
+
+  .post-votes
+    margin-top: 1em
+
+    button
+      background-color: transparent
+      border: none
+
+    img
+      height: 1em
+      width: 1em

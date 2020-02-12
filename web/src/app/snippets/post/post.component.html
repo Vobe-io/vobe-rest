@@ -1,0 +1,33 @@
+<div class="post">
+  <div class="post-profile">
+    <a href="">
+      <img src="assets/icons/face.svg" alt="profile">
+    </a>
+  </div>
+  <div class="post-container">
+    <div class="post-header">
+      <a href="">
+        {{post.owner.username}}
+        <img *ngIf="post.verified" src="assets/icons/verified.svg" alt="verified" class="user-badge">
+      </a>
+    </div>
+    <a id="post-content">
+      <span class="post-text">{{post.text}}</span>
+    </a>
+    <div class="post-actions">
+      <span>{{post.children.length > 0 ? post.children.length : ''}}</span>
+      <button>
+        <img src="assets/icons/comments.svg" alt="comments" style="transform: translateY(0.15em)" title="Reply to this Post">
+      </button>
+      <span style="color: #757575">{{post.date | date}}</span>
+    </div>
+  </div>
+  <div class="post-votes">
+    <button class="float-right">
+      <img src="assets/icons/arrow.svg" alt="upVote" style="transform: rotate(90deg)">
+    </button>
+    <button class="float-right">
+      <img src="assets/icons/arrow.svg" alt="downVote" style="transform: rotate(-90deg)">
+    </button>
+  </div>
+</div>

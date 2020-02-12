@@ -1,0 +1,43 @@
+@import "../../pub-styles/colors.sass"
+
+#navbar
+  width: 100%
+  text-align: center
+  position: sticky
+  top: 0
+  display: flex
+  justify-content: center
+  background-color: rgba($background-color, 0.75)
+  z-index: 2
+
+  #navbar-container
+    padding: 1em
+    display: grid
+    $size: 20em
+    grid-template-columns: $size $size $size
+
+  #nav-logo
+    img
+      height: 100%
+
+  .nav-item
+    padding: 0
+    line-height: 5em
+    height: 5em
+
+    a
+      text-decoration: none
+      color: $primary-color-text
+
+    span
+      margin-left: 0.5em
+      margin-right: 0.5em
+
+
+    .float-right
+      float: right
+
+    .float-left
+      float: left
+
+
