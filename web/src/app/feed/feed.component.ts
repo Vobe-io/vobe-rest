@@ -19,7 +19,7 @@ export class FeedComponent implements OnInit {
   }
 
   private loadFeed() {
-    this.backend.post('https://vobe.io/', null).subscribe(res => {
+    this.backend.post('https://api.vobe.io/', null).subscribe(res => {
       const posts = JSON.parse(res).posts;
       posts.map(post => this.posts.push(post));
     });

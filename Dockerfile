@@ -15,6 +15,8 @@ RUN npm install -g nodemon
 RUN npm install
 RUN npm audit fix
 
+RUN mv node_modules /node_modules
+
 COPY --chown=node:node . .
 
 EXPOSE 8080

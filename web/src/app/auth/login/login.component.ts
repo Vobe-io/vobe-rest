@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       password: this.password.nativeElement.value
     };
 
-    this.backend.post('https://vobe.io/api/auth/login', loginData).subscribe(res => {
+    this.backend.post('https://api.vobe.io/api/auth/login', loginData).subscribe(res => {
       this.auth.auth();
     });
   }

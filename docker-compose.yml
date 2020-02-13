@@ -35,6 +35,8 @@ services:
       VIRTUAL_PORT: 80
     depends_on:
       - vobe
+    volumes:
+      - ./data/conf/nginx.conf:/etc/nginx/conf.d/default.conf
 
   mongo:
     image: mongo
