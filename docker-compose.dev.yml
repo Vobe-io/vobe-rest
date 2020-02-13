@@ -5,19 +5,30 @@ services:
   vobe:
     image: vobe
     container_name: vobe_node
-    build: .
+    build:
+      context: .
+      target: node
     restart: always
     links:
       - mongo
     depends_on:
       - mongo
     ports:
-      - 80:${web_port}
+      - 8080:${web_port}
     volumes:
       - ./vobe/:/vobe
       - .:/home/node/app
     env_file:
       - .env
+
+  nginx:
+    build:
+      context: .
+      target: web
+    restart: always
+    ports:
+    - 80:80
+
   mongo:
     image: mongo
     container_name: vobe_mongo

@@ -7,6 +7,10 @@ npm-debug.log
 # vobe
 vobe/secrets.json
 
+#web
+dist
+**/node_modules
+
 # docker
 Dockerfile*
 /*.cmd
@@ -16,4 +20,3 @@ Dockerfile*
 README.md
 LICENSE
 
-web
