@@ -19,7 +19,7 @@ export class PostWriterComponent implements OnInit {
 
   createPost() {
     const post = {post: {text: this.post.nativeElement.value, parent: ''}};
-    this.backend.post('https://vobe.io/api/post/create', post).subscribe(
+    this.backend.post('https://api.vobe.io/api/post/create', post).subscribe(
       data => this.status = JSON.parse(data).message
     );
   }
