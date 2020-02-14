@@ -15,7 +15,9 @@ let sassMiddleware = require('node-sass-middleware');
 let app = express();
 app.use(cors({origin: [
         "https://vobe.io",
-        "https://www.vobe.io"
+        "https://www.vobe.io",
+        "http://localhost",
+        "http://localhost:4200"
     ], credentials: true}));
 
 // MONGODB

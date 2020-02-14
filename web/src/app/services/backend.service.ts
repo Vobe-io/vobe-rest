@@ -8,6 +8,8 @@ import {catchError} from 'rxjs/operators';
 })
 export class BackendService {
 
+  url = 'http://localhost:8080';
+
   constructor(private http: HttpClient) { }
 
   post(url: string, body: any): Observable<any> {
@@ -19,7 +21,7 @@ export class BackendService {
       withCredentials: true
     };
     // @ts-ignore
-    return this.http.post<any>(url, body, httpOptions);
+    return this.http.post<any>(this.url, body, httpOptions);
   }
 
   private handleError(error: HttpErrorResponse) {

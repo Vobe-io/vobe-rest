@@ -13,7 +13,7 @@ router.post('/api/auth/login', function (req, res, next) {
 
         User.authenticate(loginData.username, loginData.password, (err, user) => {
             if (err)
-                return res.status(401).send({
+                return res.send({
                     success: false,
                     message: err.message
                 });
@@ -21,7 +21,7 @@ router.post('/api/auth/login', function (req, res, next) {
             req.session.userId = user._id;
             req.session.loggedIn = true;
 
-            res.status(200).send({
+            res.send({
                 success: true,
                 message: undefined
             });
