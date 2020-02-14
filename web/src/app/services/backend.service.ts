@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  url = 'http://localhost:8080';
+  url = 'https://api.vobe.io';
 
   constructor(private http: HttpClient) { }
 
