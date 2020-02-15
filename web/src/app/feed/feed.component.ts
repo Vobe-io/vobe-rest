@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
-import {Post} from '../snippets/post/Post';
-import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-feed',
@@ -12,7 +10,7 @@ export class FeedComponent implements OnInit {
 
   posts: any[] = [];
 
-  constructor(private backend: BackendService, private auth: AuthService) { }
+  constructor(private backend: BackendService) { }
 
   ngOnInit(): void {
     this.loadFeed();

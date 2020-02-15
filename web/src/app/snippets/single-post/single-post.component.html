@@ -11,9 +11,9 @@
         <img *ngIf="post.verified" src="assets/icons/verified.svg" alt="verified" class="user-badge">
       </a>
     </div>
-    <a id="post-content">
-      <span class="post-text">{{post.text}}</span>
-    </a>
+    <div id="post-content" routerLink="/v/{{post._id}}">
+      <span class="post-text" [innerHTML]="post.text"></span>
+    </div>
     <div class="post-actions">
       <span>{{post.children.length > 0 ? post.children.length : ''}}</span>
       <button>

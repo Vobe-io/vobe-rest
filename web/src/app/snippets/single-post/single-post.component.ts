@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.sass']
+  selector: 'app-single-post',
+  templateUrl: './single-post.component.html',
+  styleUrls: ['./single-post.component.sass']
 })
-export class PostComponent implements OnInit {
+export class SinglePostComponent implements OnInit {
 
   @Input() post: any;
   date: string;
@@ -16,5 +16,4 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.date = moment(new Date(this.post.date)).fromNow();
   }
-
 }

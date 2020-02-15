@@ -8,12 +8,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './snippets/navbar/navbar.component';
 import { FooterComponent } from './snippets/footer/footer.component';
+import { SinglePostComponent } from './snippets/single-post/single-post.component';
+import { PostComponent } from './post/post.component';
 import { FeedComponent } from './feed/feed.component';
-import { PostComponent } from './snippets/post/post.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { VerificationComponent } from './auth/verification/verification.component';
 import { PostWriterComponent } from './snippets/post-writer/post-writer.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +25,13 @@ import { PostWriterComponent } from './snippets/post-writer/post-writer.componen
     NavbarComponent,
     FooterComponent,
     FeedComponent,
+    SinglePostComponent,
     PostComponent,
     RegisterComponent,
     LoginComponent,
     VerificationComponent,
     PostWriterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

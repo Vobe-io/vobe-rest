@@ -20,7 +20,7 @@ export class BackendService {
       withCredentials: true
     };
     // @ts-ignore
-    return this.http.post<any>(this.url, body, httpOptions);
+    return this.http.post<any>(this.url + url, body, httpOptions);
   }
 
   private handleError(error: HttpErrorResponse) {

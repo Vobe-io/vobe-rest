@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BackendService} from './backend.service';
 
 @Injectable({
@@ -8,7 +8,8 @@ export class AuthService {
 
   user: any;
 
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService) {
+  }
 
   auth() {
     this.backend.post('/api/auth/auth', null).subscribe(res => {
@@ -18,7 +19,7 @@ export class AuthService {
 
   logout() {
     this.backend.post('/api/auth/logout', null).subscribe(res => {
-      this.user = null;
+      this.user = '';
     });
   }
 }

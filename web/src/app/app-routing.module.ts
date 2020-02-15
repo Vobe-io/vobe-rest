@@ -7,6 +7,7 @@ import {RegisterComponent} from './auth/register/register.component';
 import {LoginComponent} from './auth/login/login.component';
 import {VerificationComponent} from './auth/verification/verification.component';
 import {PostComponent} from './post/post.component';
+import {ProfileComponent} from './profile/profile.component';
 
 const appRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: ':username',
+    component: ProfileComponent
   },
   {
     path: '',
