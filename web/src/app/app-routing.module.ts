@@ -27,17 +27,12 @@ const appRoutes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
     path: ':username',
     component: ProfileComponent
   },
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    component: HomeComponent
   },
   {
     path: '**',
