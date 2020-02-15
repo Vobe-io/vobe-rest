@@ -8,7 +8,7 @@
     <div class="post-header">
       <a href="">
         {{post.owner.username}}
-        <img *ngIf="post.verified" src="assets/icons/verified.svg" alt="verified" class="user-badge">
+        <img *ngIf="post.owner.verified" src="assets/icons/verified.svg" alt="verified" class="user-badge">
       </a>
     </div>
     <div id="post-content" routerLink="/v/{{post._id}}">
