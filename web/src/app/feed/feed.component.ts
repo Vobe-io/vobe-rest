@@ -1,25 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../services/backend.service';
+import {feedAnimation} from './feed-animation';
+import {DataService} from '../services/data.service';
 
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.sass']
+  styleUrls: ['./feed.component.sass'],
+  animations: [feedAnimation]
 })
 export class FeedComponent implements OnInit {
 
-  posts: any[] = [];
-
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService, public data: DataService) { }
 
   ngOnInit(): void {
-    this.loadFeed();
+    if (this.data.posts.length === 0) {
+      this.loadFeed();
+    }
   }
 
   private loadFeed() {
     this.backend.post('/', null).subscribe(res => {
       const posts = JSON.parse(res).posts;
-      posts.map(post => this.posts.push(post));
+      posts.map(post => {
+        this.data.posts.push(post);
+      });
+      this.data.newPost.subscribe(post => {
+        if (post !== null) {
+          this.data.posts.unshift(post);
+        }
+      });
     });
   }
 }

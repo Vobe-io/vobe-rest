@@ -56,6 +56,8 @@ PostSchema.statics.getRichPost = async function (aggs = []) {
                 localField: '_id',
                 foreignField: 'parent'
             }
+        }, {
+            $limit: 20
         }
     ];
 
