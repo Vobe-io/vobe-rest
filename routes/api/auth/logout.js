@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let response = require(__bin + '/lib/Response');
 
 /* GET home page. */
 router.post('/api/auth/logout', function (req, res, next) {
@@ -9,7 +10,7 @@ router.post('/api/auth/logout', function (req, res, next) {
             if(err) {
                 return next(err);
             } else {
-                return res.send('success');
+                res.status(200).send(response('', 'Success'));
             }
         });
     }

@@ -16,15 +16,17 @@ export class ProfileComponent implements OnInit {
   constructor(private backend: BackendService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadProfile();
+    this.route.params.subscribe(data => this.loadProfile(data.username));
   }
 
-  loadProfile() {
+  loadProfile(user) {
     const profileData = {
-      username: this.route.snapshot.paramMap.get('username')
+      username: user
     };
-    this.backend.post('/api/profile', profileData).subscribe(res =>
-      this.profile = JSON.parse(res)[0]
+    this.backend.post('/api/profile', profileData).subscribe(res => {
+        console.log(res);
+        this.profile = res.data;
+      }
     );
   }
 }

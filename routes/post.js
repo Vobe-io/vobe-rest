@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let Post = require(__models + '/post.js');
 let bson = require('bson');
+let response = require(__bin + '/lib/Response');
 
 router.post('/v', async function (req, res, next) {
 
@@ -14,17 +15,9 @@ router.post('/v', async function (req, res, next) {
             $limit: 1
         }]);
 
-    else return res.send({
-        success: false,
-        message: 'Invalid post ID'
-    });
-    return res.send({
-        success: true,
-        posts: posts
-    });
+    else return res.status(400).send(response('', 'Invalid post ID'));
+    res.status(200).send(response(posts, ''));
 });
-
-
 
 module.exports = {
     index: 0,

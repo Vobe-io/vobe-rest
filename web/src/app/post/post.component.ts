@@ -23,8 +23,12 @@ export class PostComponent implements OnInit {
       postId: this.route.snapshot.paramMap.get('postID')
     };
     this.backend.post('/v', postData).subscribe(
-      data => { if (data !== null) {JSON.parse(data).posts.map(post => this.posts.push(post))}},
-      error => this.status = JSON.parse(error).message
+      res => {
+          if (res !== null) {
+            res.data.map(post => this.posts.push(post));
+          }
+        },
+      err => this.status = err.error.message
       );
   }
 }

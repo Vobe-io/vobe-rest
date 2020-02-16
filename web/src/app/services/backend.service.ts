@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,23 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
+  get(url: string, body: any): Observable<any> {
+    // @ts-ignore
+    return this.http.get<any>(this.url + url);
+  }
+
   post(url: string, body: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      responseType: 'text',
+      responseType: 'json',
       withCredentials: true
     };
     // @ts-ignore
     return this.http.post<any>(this.url + url, body, httpOptions);
   }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

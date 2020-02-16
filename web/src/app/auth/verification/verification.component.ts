@@ -24,8 +24,8 @@ export class VerificationComponent implements OnInit {
       email: this.route.snapshot.paramMap.get('email')
     };
     this.backend.post('/api/auth/verification', verificationData).subscribe(
-      data => this.status = JSON.parse(data).message,
-      err => this.status = JSON.parse(err).message
+      data => this.status = data.message,
+      err => this.status = err.error.message
     );
   }
 }

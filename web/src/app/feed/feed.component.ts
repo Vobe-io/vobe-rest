@@ -20,9 +20,8 @@ export class FeedComponent implements OnInit {
   }
 
   private loadFeed() {
-    this.backend.post('/', null).subscribe(res => {
-      const posts = JSON.parse(res).posts;
-      posts.map(post => {
+    this.backend.get('/api/post/get', null).subscribe((res) => {
+      res.data.map(post => {
         this.data.posts.push(post);
       });
       this.data.newPost.subscribe(post => {
@@ -30,6 +29,6 @@ export class FeedComponent implements OnInit {
           this.data.posts.unshift(post);
         }
       });
-    });
+    }, (err) => null);
   }
 }

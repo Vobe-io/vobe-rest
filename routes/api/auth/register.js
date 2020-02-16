@@ -2,7 +2,7 @@ let express = require('express');
 let crypto = require('crypto-random-string');
 let User = require(__bin + "/models/user.js");
 let Verification = require(__bin + "/models/verification.js");
-
+let response = require(__bin + '/lib/Response');
 const rateLimiter = require(__bin + '/lib/rateLimiter');
 
 let router = express.Router();
@@ -19,6 +19,7 @@ let rateLimit = rateLimiter.RateLimit({
     message: "Too many accounts created from this IP"
 });
 
+
 /* GET home page. */
 router.post('/api/auth/register', rateLimit, function (req, res, next) {
         if (req.body.email &&
@@ -26,10 +27,7 @@ router.post('/api/auth/register', rateLimit, function (req, res, next) {
             req.body.password) {
 
             if (isEmailBurner(req.body.email))
-                return res.send({
-                    success: true,
-                    message: 'Just one more step: We have send an email to <b>' + req.body.email + '</b> please check your spam folder'
-                });
+                return res.status(200).send(response('', 'Just one more step: We have send an email to <b>' + req.body.email + '</b> please check your spam folder'));
 
             let userData = {
                 email: req.body.email,
@@ -41,24 +39,15 @@ router.post('/api/auth/register', rateLimit, function (req, res, next) {
 
             let email_validation = new RegExp("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])");
             if (!email_validation.test(userData.email))
-                return res.send({
-                    success: false,
-                    message: 'Wrong email format'
-                });
+                return res.status(400).send(response('', 'Wrong email format'));
             let username_validation = new RegExp("^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$");
             if (!username_validation.test(userData.username))
-                return res.send({
-                    success: false,
-                    message: 'Wrong username format'
-                });
+                return res.status(400).send(response('', 'Wrong username format'));
 
             //use schema.create to insert data into the db
             User.create(userData, function (err, user) {
                 if (err)
-                    return res.send({
-                        success: false,
-                        message: 'Email, or username already exists'
-                    });
+                    return res.status(403).send(response('', 'Email, or username already exists'));
                 if (!user.emailVerified) {
                     const token = crypto({length: 255});
                     Verification.create(
@@ -76,16 +65,9 @@ router.post('/api/auth/register', rateLimit, function (req, res, next) {
                             };
                             sg.send(msg);
                             if (err) {
-                                console.log('true');
-                                return res.send({
-                                    success: false,
-                                    message: err.message
-                                });
+                                res.status(400).send(response('', err.message));
                             }
-                            return res.send({
-                                success: true,
-                                message: 'Just one more step: We have send an email to <b>' + userData.email + '</b> please check your spam folder'
-                            });
+                            return res.status(200).send(response('', 'Just one more step: We have send an email to <b>' + userData.email + '</b> please check your spam folder'));
                         }
                     );
                 }
