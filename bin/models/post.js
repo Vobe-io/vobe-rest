@@ -20,11 +20,6 @@ let PostSchema = new mongoose.Schema({
     text: {
         type: String,
         required: true
-    },
-
-    votes: {
-        down: {type: Number, default: 0},
-        up: {type: Number, default: 0}
     }
 });
 
