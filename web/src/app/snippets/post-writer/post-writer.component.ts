@@ -26,9 +26,8 @@ export class PostWriterComponent implements OnInit {
 
   createPost() {
     const post = {post: {text: this.post.nativeElement.value, parent: ''}};
-    this.backend.post('/api/post/create', post).subscribe(data => {
-      const res = JSON.parse(data);
-      this.data.addPost(res.message);
+    this.backend.post('/api/post/create', post).subscribe(res => {
+      this.data.addPost(res.data);
       // res.error === null ? this.data.addPost(res.message) : (this.status = JSON.parse(data).error);
     });
     this.post.nativeElement.value = '';

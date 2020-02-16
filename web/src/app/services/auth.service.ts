@@ -13,7 +13,7 @@ export class AuthService {
 
   auth() {
     this.backend.post('/api/auth/auth', null).subscribe(res => {
-      this.user = JSON.parse(res).user;
+      this.user = res.data;
     });
   }
 

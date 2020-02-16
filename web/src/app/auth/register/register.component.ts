@@ -27,8 +27,8 @@ export class RegisterComponent implements OnInit {
     };
 
     this.backend.post('/api/auth/register', registerData).subscribe(
-      data => this.status = JSON.parse(data).message,
-      err => this.status = JSON.parse(err).message
+      data => this.status = data.message,
+      err => this.status = err.error.message
     );
   }
 }

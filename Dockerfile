@@ -1,6 +1,6 @@
 # Stage 1
 # START BACKEND / NODEJS
-FROM node:10 AS node
+FROM node:11 AS node
 COPY ./web /web
 WORKDIR /web
 RUN npm i
