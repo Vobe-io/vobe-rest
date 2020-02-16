@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
 
   constructor(public auth: AuthService, private backend: BackendService) { }
 
+  status = '';
+
   ngOnInit(): void {
   }
 
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
       password: this.password.nativeElement.value
     };
 
-    this.backend.post('https://api.vobe.io/api/auth/login', loginData).subscribe(res => {
+    this.backend.post('/api/auth/login', loginData).subscribe(res => {
       this.auth.auth();
     });
   }

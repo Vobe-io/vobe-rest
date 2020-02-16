@@ -7,7 +7,7 @@
     <div class="nav-item">
       <ng-container *ngIf="auth.user; else show">
         <img src="assets/icons/face.svg" style="margin-bottom: -0.35em; margin-left: 0.25em">
-        <a href="/">{{auth.user.username}}</a>
+        <a routerLink="/{{auth.user.username}}">{{auth.user.username}}</a>
         <span>|</span>
         <a (click)="auth.logout()">Logout</a>
       </ng-container>

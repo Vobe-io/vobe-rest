@@ -26,9 +26,9 @@ export class RegisterComponent implements OnInit {
       password: this.password.nativeElement.value
     };
 
-    this.backend.post('https://api.vobe.io/api/auth/register', registerData).subscribe(
-      data => this.status = JSON.parse(data).message,
-      err => this.status = JSON.parse(err).message
+    this.backend.post('/api/auth/register', registerData).subscribe(
+      data => this.status = data.message,
+      err => this.status = err.error.message
     );
   }
 }

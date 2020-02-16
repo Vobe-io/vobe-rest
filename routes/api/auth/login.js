@@ -2,6 +2,8 @@ let express = require('express');
 let User = require(__bin + "/models/user.js");
 let router = express.Router();
 
+let response = require(__bin + '/lib/Response');
+
 /* GET home page. */
 router.post('/api/auth/login', function (req, res, next) {
     if (req.body.username && req.body.password) {
@@ -13,7 +15,7 @@ router.post('/api/auth/login', function (req, res, next) {
 
         User.authenticate(loginData.username, loginData.password, (err, user) => {
             if (err)
-                return res.status(401).send({
+                return res.send({
                     success: false,
                     message: err.message
                 });
@@ -21,10 +23,7 @@ router.post('/api/auth/login', function (req, res, next) {
             req.session.userId = user._id;
             req.session.loggedIn = true;
 
-            res.status(200).send({
-                success: true,
-                message: undefined
-            });
+            res.status(200).send(response('', 'Successful'));
         });
 
     }

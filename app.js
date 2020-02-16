@@ -15,7 +15,9 @@ let sassMiddleware = require('node-sass-middleware');
 let app = express();
 app.use(cors({origin: [
         "https://vobe.io",
-        "https://www.vobe.io"
+        "https://www.vobe.io",
+        "http://localhost",
+        "http://localhost:4200"
     ], credentials: true}));
 
 // MONGODB
@@ -113,7 +115,6 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('http/error');
 });
 
 module.exports = app;

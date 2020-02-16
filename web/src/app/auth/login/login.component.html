@@ -2,6 +2,7 @@
 
 <input #username placeholder="username">
 <input #password placeholder="password" type="password">
-<input id="login-confirm" type="button" value="Login" (click)="login()" routerLink="/">
+<input id="login-confirm" type="button" value="Login" (click)="login()">
 
-<p id="status">{{auth.user ? 'Logged in' : ''}}</p>
+<p>{{auth.user ? 'Logged in' : ''}}</p>
+<p>{{status}}</p>

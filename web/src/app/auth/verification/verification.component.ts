@@ -23,9 +23,9 @@ export class VerificationComponent implements OnInit {
       token: this.route.snapshot.paramMap.get('token'),
       email: this.route.snapshot.paramMap.get('email')
     };
-    this.backend.post('https://api.vobe.io/api/auth/verification', verificationData).subscribe(
-      data => this.status = JSON.parse(data).message,
-      err => this.status = JSON.parse(err).message
+    this.backend.post('/api/auth/verification', verificationData).subscribe(
+      data => this.status = data.message,
+      err => this.status = err.error.message
     );
   }
 }

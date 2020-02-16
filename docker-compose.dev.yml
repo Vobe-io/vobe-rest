@@ -7,7 +7,7 @@ services:
     container_name: vobe_node
     build:
       context: .
-      target: node
+      dockerfile: dev.Dockerfile
     restart: always
     links:
       - mongo
@@ -20,14 +20,6 @@ services:
       - .:/home/node/app
     env_file:
       - .env
-
-  nginx:
-    build:
-      context: .
-      target: web
-    restart: always
-    ports:
-    - 80:80
 
   mongo:
     image: mongo
