@@ -6,10 +6,12 @@
   </div>
   <div class="post-container">
     <div class="post-header">
-      <a href="">
-        {{post.owner.username}}
-        <img *ngIf="post.owner.verified" src="assets/icons/verified.svg" alt="verified" class="user-badge">
-      </a>
+      <div class="post-owner" routerLink="/{{post.owner.username}}">
+        <a>
+          {{post.owner.username}}
+          <img *ngIf="post.owner.verified" src="assets/icons/verified.svg" alt="verified" class="user-badge">
+        </a>
+      </div>
     </div>
     <div id="post-content" routerLink="/v/{{post._id}}">
       <span class="post-text" [innerHTML]="post.text"></span>
