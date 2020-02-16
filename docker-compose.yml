@@ -5,12 +5,14 @@ services:
   vobe:
     image: vobe
     container_name: vobe_node
-    build: .
+    build:
+      context: .
+      target: node
     restart: always
     environment:
-      LETSENCRYPT_EMAIL: timoaeckerle@gmx.de
-      LETSENCRYPT_HOST: vobe.io, www.vobe.io
-      VIRTUAL_HOST: vobe.io, www.vobe.io
+      LETSENCRYPT_EMAIL: contact.vobe@gmail.com
+      LETSENCRYPT_HOST: api.vobe.io
+      VIRTUAL_HOST: api.vobe.io
       VIRTUAL_PORT: 80
     links:
       - mongo
@@ -19,6 +21,23 @@ services:
     volumes:
       - ./vobe/:/vobe
       - .:/home/node/app
+
+  nginx:
+    container_name: vobe_web
+    build:
+      context: .
+      target: web
+    restart: always
+    environment:
+      LETSENCRYPT_EMAIL: contact.vobe@gmail.com
+      LETSENCRYPT_HOST: vobe.io, www.vobe.io
+      VIRTUAL_HOST: vobe.io, www.vobe.io
+      VIRTUAL_PORT: 80
+    depends_on:
+      - vobe
+    volumes:
+      - ./data/conf/nginx.conf:/etc/nginx/conf.d/default.conf
+
   mongo:
     image: mongo
     container_name: vobe_mongo

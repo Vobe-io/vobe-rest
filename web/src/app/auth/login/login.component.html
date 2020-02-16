@@ -1,0 +1,8 @@
+<h1>Welcome, {{auth.user ? auth.user.username : 'User'}}</h1>
+
+<input #username placeholder="username">
+<input #password placeholder="password" type="password">
+<input id="login-confirm" type="button" value="Login" (click)="login()">
+
+<p>{{auth.user ? 'Logged in' : ''}}</p>
+<p>{{status}}</p>

@@ -4,6 +4,7 @@ let User = require(__bin + '/models/user.js');
 let xssFilters = require('xss-filters');
 let PostHandler = require(__bin + '/lib/PostHandler');
 let router = express.Router();
+let response = require(__bin + '/lib/Response');
 
 const rateLimiter = require(__bin + '/lib/rateLimiter');
 
@@ -15,22 +16,24 @@ let rateLimit = rateLimiter.RateLimit({
 
 router.post('/api/post/create', rateLimit, function (req, res, next) {
     if (!req.session.loggedIn)
-        return res.status(401).send({error: 'You need to be logged in to create a post'});
+        return res.status(401).send(response('', 'You need to be logged in to create a post'));
     User.isEmailVerified(req.user._id, (verified) => {
         if (verified) {
-            let post = JSON.parse(req.body.post);
+            let post = req.body.post;
 
-            if(!PostHandler.checkLength(post.text)) return res.status(403).send({error: 'Post to long'});
+            if(!PostHandler.checkLength(post.text)) return res.status(403).send(response('', 'Post to long'));
 
             Post.create({
 
                 owner: req.user._id,
-                parent: post.parent,
+                //parent: 'test',
                 text: PostHandler.parse(xssFilters.inHTMLData(post.text))
 
             }, async function (err, p) {
-                if (err)
+                if (err) {
+                    console.log(err.message);
                     return next(err);
+                }
                 
                 let posts = await Post
                     .aggregate()
@@ -58,15 +61,9 @@ router.post('/api/post/create', rateLimit, function (req, res, next) {
                 if(posts.length < 1)
                     return res.next();
 
-                res.render('snippets/post', {
-                    user: req.user,
-                    post: posts[0],
-                    modules: {
-                        moment: require('moment')
-                    }
-                });
+                res.status(200).send(response(posts[0], 'Successfully created post'));
             });
-        } else return res.status(401).send({error: 'Your account must be verified'});
+        } else return res.status(401).send(response('', 'Your account must be verified'));
     });
 });
 

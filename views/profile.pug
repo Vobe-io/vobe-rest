@@ -1,8 +1,0 @@
-extends layout
-
-block content
-   div#data
-      if profile === undefined
-         h1='\'' + params.username + '\' does not exist.'
-      else
-         h1=profile.username

@@ -1,0 +1,21 @@
+<div id="navbar">
+  <div id="navbar-container">
+    <div class="nav-item"></div>
+    <a id="nav-logo" class="nav-item nav-logo" routerLink="">
+      <img src="assets/logo/vobe.svg" alt="logo">
+    </a>
+    <div class="nav-item">
+      <ng-container *ngIf="auth.user; else show">
+        <img src="assets/icons/face.svg" style="margin-bottom: -0.35em; margin-left: 0.25em">
+        <a routerLink="/{{auth.user.username}}">{{auth.user.username}}</a>
+        <span>|</span>
+        <a (click)="auth.logout()">Logout</a>
+      </ng-container>
+      <ng-template #show>
+        <a routerLink="/login">Login</a>
+        <span>|</span>
+        <a routerLink="/register">Register</a>
+      </ng-template>
+    </div>
+  </div>
+</div>

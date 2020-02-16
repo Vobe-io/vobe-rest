@@ -1,0 +1,11 @@
+<div id="post-writer-container">
+  <div id="post-writer">
+    <textarea (keypress)="handleShortcut($event)" #post id="post-text" placeholder="Tell us something about yourself!"></textarea>
+    <div id="post-writer-actions">
+      <button type="button" (click)="createPost()" class="float-right">
+        <img src="assets/icons/send.svg" alt="send">
+      </button>
+    </div>
+  </div>
+  <p>{{status}}</p>
+</div>

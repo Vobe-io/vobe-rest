@@ -1,0 +1,42 @@
+@import "../../pub-styles/colors"
+
+#post-writer-container
+  display: flex
+  justify-content: center
+
+  #post-writer
+    text-align: center
+    border: 0.25em solid $primary-color-text
+    border-radius: 0.5em
+
+    width: 20em
+    overflow: hidden
+
+    #post-writer-actions
+      & > .float-right
+        float: right
+
+      & > .float-left
+        float: left
+
+      button
+        margin: 0.5em
+        background-color: transparent
+        border: none
+        border-radius: 10em
+        height: 2em
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &:hover
+          background-color: $divider-color-button
+          cursor: pointer
+
+  textarea
+    $padding: .5em
+    padding: $padding
+    border: none
+    width: 20em - $padding*2
+    height: 5em - $padding*2
+    resize: none
