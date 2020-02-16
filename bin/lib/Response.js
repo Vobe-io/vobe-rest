@@ -1,7 +1,7 @@
-module.exports = response = (data = '', message = '') => {
+module.exports = response = (data = '', message) => {
     return {
         version: __vobe.version,
-        message: undefined,
+        message: message ? message : undefined,
         data: data,
     }
 }
