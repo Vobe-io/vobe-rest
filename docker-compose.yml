@@ -9,10 +9,6 @@ services:
       context: .
       target: node
     restart: always
-    links:
-      - mongo
-    depends_on:
-      - mongo
     volumes:
       - ./vobe/:/vobe
       - .:/home/node/app
