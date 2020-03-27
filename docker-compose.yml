@@ -32,16 +32,17 @@ services:
     networks:
       - vobe
 
-  mongo:
-    image: mongo
-    container_name: vobe_mongo
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodata:/data/db
-    networks: 
-      - vobe
+  # Mongo installation is now defined in vobe-gql
+  #mongo:
+  #  image: mongo
+  #  container_name: vobe_mongo
+  #  restart: always
+  #  ports:
+  #    - "27017:27017"
+  #  volumes:
+  #    - mongodata:/data/db
+  #  networks:
+  #    - vobe
 
 volumes:
   mongodata:
