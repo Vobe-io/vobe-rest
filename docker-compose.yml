@@ -16,8 +16,8 @@ services:
     volumes:
       - ./vobe/:/vobe
       - .:/home/node/app
-    ports:
-      - 8080:80
+    networks:
+      - vobe
 
   nginx:
     container_name: vobe_web
@@ -25,14 +25,12 @@ services:
       context: .
       target: web
     restart: always
-    environment:
-      NGINX_PORT: 80
     depends_on:
       - vobe
     volumes:
       - ./data/conf/nginx.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - 81:80
+    networks:
+      - vobe
 
   mongo:
     image: mongo
@@ -42,6 +40,12 @@ services:
       - "27017:27017"
     volumes:
       - mongodata:/data/db
+    networks: 
+      - vobe
 
 volumes:
   mongodata:
+
+networks:
+  vobe:
+    external: true
