@@ -31,7 +31,7 @@
 		"http-errors": "~1.8.0",
 		"moment": "^2.27.0",
 		"mongodb": "^3.4.1",
-		"mongoose": "^5.8.7",
+		"mongoose": "^5.9.25",
 		"morgan": "~1.10.0",
 		"node-sass": "^4.13.1",
 		"node-sass-middleware": "0.11.0",
