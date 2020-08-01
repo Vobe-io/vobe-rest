@@ -30,7 +30,7 @@
 		"express-session": "^1.17.1",
 		"http-errors": "~1.8.0",
 		"moment": "^2.27.0",
-		"mongodb": "^3.5.9",
+		"mongodb": "^3.6.0",
 		"mongoose": "^5.9.27",
 		"morgan": "~1.10.0",
 		"node-sass": "^4.14.1",
