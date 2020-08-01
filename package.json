@@ -37,7 +37,7 @@
 		"node-sass-middleware": "0.11.0",
 		"pug": "^3.0.0",
 		"rate-limit-mongo": "^2.1.0",
-		"uuid": "^3.3.3",
+		"uuid": "^8.3.0",
 		"xss": "^1.0.7",
 		"xss-filters": "^1.2.7"
 	}
