@@ -11,7 +11,7 @@
 		]
 	},
 	"dependencies": {
-		"@sendgrid/mail": "^7.2.1",
+		"@sendgrid/mail": "^7.2.2",
 		"bcrypt": "^5.0.0",
 		"bson": "latest",
 		"burner-email-providers": "^1.0.24",
@@ -25,19 +25,19 @@
 		"crypto-random-string": "^3.2.0",
 		"debug": "~4.1.1",
 		"dotenv": "^8.2.0",
-		"express": "~4.16.1",
+		"express": "~4.17.1",
 		"express-rate-limit": "^5.0.0",
 		"express-session": "^1.17.1",
 		"http-errors": "~1.8.0",
 		"moment": "^2.27.0",
-		"mongodb": "^3.5.9",
-		"mongoose": "^5.9.25",
+		"mongodb": "^3.6.0",
+		"mongoose": "^5.9.27",
 		"morgan": "~1.10.0",
 		"node-sass": "^4.14.1",
 		"node-sass-middleware": "0.11.0",
-		"pug": "^2.0.4",
+		"pug": "^3.0.0",
 		"rate-limit-mongo": "^2.1.0",
-		"uuid": "^3.3.3",
+		"uuid": "^8.3.0",
 		"xss": "^1.0.8",
 		"xss-filters": "^1.2.7"
 	}
